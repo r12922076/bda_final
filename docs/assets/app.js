@@ -17,6 +17,9 @@
   function save(partial={}){ state = {...state, ...partial}; PG.saveState(state); }
   function setNested(group, key, val){ state[group][key]=val; PG.saveState(state); }
   function destroyCharts(){ charts.forEach(c=>{try{c.destroy()}catch{}}); charts=[]; }
+  function byId(id){ return document.getElementById(id); }
+  function setText(id, text){ const el = byId(id); if(el) el.textContent = text; }
+  function on(id, event, handler){ const el = byId(id); if(el) el.addEventListener(event, handler); }
   function makeChart(canvas, type, labels, datasets, options={}){
     if(!canvas || !window.Chart) return;
     const chart = new Chart(canvas, {type, data:{labels,datasets}, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true}}, ...options}});
@@ -27,9 +30,9 @@
     app.innerHTML = `<section class="page-head"><div><div class="eyebrow">PineGuard static product demo</div><h1>${PG.esc(title)}</h1><p>${PG.esc(subtitle)}</p></div><div class="page-actions">${actions}</div></section>${body}`;
     bindCommon();
   }
-  function bindCommon(){ navLinks.classList.remove("open"); }
-  navToggle.addEventListener("click", ()=> navLinks.classList.toggle("open"));
-  navLinks.addEventListener("click", ()=> navLinks.classList.remove("open"));
+  function bindCommon(){ if(navLinks) navLinks.classList.remove("open"); }
+  if(navToggle && navLinks) navToggle.addEventListener("click", ()=> navLinks.classList.toggle("open"));
+  if(navLinks) navLinks.addEventListener("click", ()=> navLinks.classList.remove("open"));
 
   function getComputed(){
     const ft = PG.forwardTest(DATA.alerts, DATA.prices, Number(state.horizon));
@@ -100,12 +103,12 @@
     shell("Strategy Health Check", "Walk through a product-style onboarding flow instead of a flat dashboard.", body, PG.routeButton("View sample report", "report", "secondary"));
     document.querySelectorAll("[data-step]").forEach(b=>b.onclick=()=>{save({step:Number(b.dataset.step)}); healthCheck();});
     document.querySelectorAll("[data-persona]").forEach(b=>b.onclick=()=>{save({persona:b.dataset.persona, step:2}); healthCheck();});
-    ["f-style","f-market","f-risk"].forEach(id=>{const el=document.getElementById(id); if(el) el.oninput=()=>{save({[id.replace('f-','')]:el.value});};});
-    const hz=document.getElementById("f-horizon"); if(hz) hz.oninput=()=>{document.getElementById("h-label").textContent=hz.value; save({horizon:Number(hz.value)});};
+    ["f-style","f-market","f-risk"].forEach(id=>{const el=byId(id); if(el) el.oninput=()=>{save({[id.replace('f-','')]:el.value});};});
+    const hz=byId("f-horizon"); if(hz) hz.oninput=()=>{setText("h-label", hz.value); save({horizon:Number(hz.value)});};
     document.querySelectorAll("[data-data]").forEach(ch=>ch.oninput=()=>{setNested("data", ch.dataset.data, ch.checked);});
     document.querySelectorAll("[data-concern]").forEach(ch=>ch.oninput=()=>{setNested("concerns", ch.dataset.concern, ch.checked);});
-    document.getElementById("prev-step").onclick=()=>{save({step:Math.max(1, step-1)}); healthCheck();};
-    document.getElementById("next-step").onclick=()=>{save({step:Math.min(5, step+1)}); healthCheck();};
+    on("prev-step", "click", ()=>{save({step:Math.max(1, step-1)}); healthCheck();});
+    on("next-step", "click", ()=>{save({step:Math.min(5, step+1)}); healthCheck();});
   }
 
   function diagnosis(){
@@ -115,7 +118,7 @@
       <section class="grid two"><div class="card"><h2>Missing or weak components</h2><div class="checklist">${missing.length?missing.map(g=>`<div class="check"><div><strong>${PG.esc(g.label)}</strong><br><span class="muted">${PG.esc(g.detail)}</span></div>${PG.badge("Fix", "amber")}</div>`).join(""):"<p>No major missing workflow component under this profile.</p>"}</div></div><div class="card"><h2>Recommended next actions</h2><div class="action-list"><a href="#/strategy-profile">Use recommended template library</a><a href="#/monitor">Inspect evaluated alert events</a><a href="#/evidence">Review evidence basis</a><button id="download-diagnosis">Download diagnosis JSON</button></div></div></section>
       <section class="grid three">${recs.map(r=>PG.card(r.name, `<p>${PG.esc(r.description)}</p>${PG.badge(r.revenue_angle,"blue")}`)).join("")}</section>`;
     shell("Diagnosis", "Score breakdown, missing workflow components, and recommended next actions.", body);
-    document.getElementById("download-diagnosis").onclick=()=>PG.downloadText("pineguard_diagnosis.json", JSON.stringify({state, breakdown, missing}, null, 2), "application/json");
+    on("download-diagnosis", "click", ()=>PG.downloadText("pineguard_diagnosis.json", JSON.stringify({state, breakdown, missing}, null, 2), "application/json"));
   }
 
   function strategyProfile(){
@@ -139,10 +142,10 @@
     shell("Forward-Test Monitor", "Evaluate TradingView-style alert events and demonstrate static data ingestion.", body);
     document.querySelectorAll("[data-horizon]").forEach(b=>b.onclick=()=>{save({horizon:Number(b.dataset.horizon)}); monitor();});
     const labels=ft.slice(0,36).map((_,i)=>i+1), vals=ft.slice(0,36).map(x=>+(100*x.directional_return).toFixed(2));
-    makeChart(document.getElementById("monitor-chart"), "line", labels, [{label:"Directional return (%)", data:vals, tension:.35, borderWidth:2}], {scales:{y:{ticks:{callback:v=>v+"%"}}}});
-    document.getElementById("download-sample-csv").onclick=()=>PG.downloadText("sample_alert_events.csv", sampleCsv, "text/csv");
-    document.getElementById("copy-payload").onclick=()=>PG.copyText(JSON.stringify(samplePayload,null,2)).then(()=>document.getElementById("copy-payload").textContent="Copied");
-    document.getElementById("csv-upload").onchange=e=>{const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{const rows=PG.parseCsv(r.result); document.getElementById("csv-status").textContent=`Parsed ${rows.length} rows locally. No file was uploaded to a server.`;}; r.readAsText(f);};
+    makeChart(byId("monitor-chart"), "line", labels, [{label:"Directional return (%)", data:vals, tension:.35, borderWidth:2}], {scales:{y:{ticks:{callback:v=>v+"%"}}}});
+    on("download-sample-csv", "click", ()=>PG.downloadText("sample_alert_events.csv", sampleCsv, "text/csv"));
+    on("copy-payload", "click", ()=>PG.copyText(JSON.stringify(samplePayload,null,2)).then(()=>setText("copy-payload", "Copied")));
+    on("csv-upload", "change", e=>{const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{const rows=PG.parseCsv(r.result); setText("csv-status", `Parsed ${rows.length} rows locally. No file was uploaded to a server.`);}; r.readAsText(f);});
   }
 
   function evidence(){
@@ -154,12 +157,12 @@
     const body = `<section class="grid two"><div class="card"><h2>Evidence filters</h2><div class="form-grid two-cols"><label>Pain category<select id="filter-cat"><option value="all">All categories</option>${categories.map(x=>`<option value="${PG.esc(x)}" ${currentCat===x?'selected':''}>${PG.esc(x)}</option>`).join("")}</select></label><label>Source type<select id="filter-source"><option value="all">All source types</option>${sources.map(x=>`<option value="${PG.esc(x)}" ${currentSource===x?'selected':''}>${PG.esc(x)}</option>`).join("")}</select></label></div><div class="actions mt"><button class="btn secondary" id="strong-only">Show strong evidence</button><button class="btn secondary" id="wtp-only">Show WTP evidence</button><button class="btn primary" id="export-evidence">Export evidence CSV</button></div></div><div class="card"><h2>Evidence summary</h2><div class="grid two mini-metrics">${PG.metric("Visible rows", rows.length, "after filters")}${PG.metric("Total rows", DATA.evidence.length, "snapshot")}</div><div class="chartbox small"><canvas id="evidence-chart"></canvas></div></div></section>
       <section class="evidence-grid">${rows.slice(0,18).map(e=>`<article class="evidence-card"><div>${PG.badge(e.source_type,"blue")} ${PG.badge(e.pain_category,"neutral")}</div><h3>${PG.esc((e.url||"").replace(/^https?:\/\//,'').slice(0,70))}</h3><p>${PG.esc(e.short_evidence || e.why_relevant || "Evidence row")}</p><p class="muted"><strong>How it supports PineGuard:</strong> ${PG.esc(e.why_relevant || "Supports evidence-backed product design.")}</p><a href="${PG.esc(e.url)}" target="_blank" rel="noreferrer">Open source</a></article>`).join("")}</section>`;
     shell("Evidence Explorer", "Filter official docs, public traces, competitor benchmarks, and product-evidence mappings.", body);
-    document.getElementById("filter-cat").oninput=e=>{sessionStorage.setItem("pg_cat", e.target.value); evidence();};
-    document.getElementById("filter-source").oninput=e=>{sessionStorage.setItem("pg_source", e.target.value); evidence();};
-    document.getElementById("export-evidence").onclick=()=>PG.downloadText("pineguard_evidence_export.csv", PG.csvFromRows(rows), "text/csv");
-    document.getElementById("strong-only").onclick=()=>{sessionStorage.setItem("pg_source","official_doc"); evidence();};
-    document.getElementById("wtp-only").onclick=()=>{sessionStorage.setItem("pg_source","pricing"); evidence();};
-    makeChart(document.getElementById("evidence-chart"), "bar", DATA.evidenceCategory.map(x=>x.name), [{label:"Rows", data:DATA.evidenceCategory.map(x=>x.value)}], {plugins:{legend:{display:false}}});
+    on("filter-cat", "input", e=>{sessionStorage.setItem("pg_cat", e.target.value); evidence();});
+    on("filter-source", "input", e=>{sessionStorage.setItem("pg_source", e.target.value); evidence();});
+    on("export-evidence", "click", ()=>PG.downloadText("pineguard_evidence_export.csv", PG.csvFromRows(rows), "text/csv"));
+    on("strong-only", "click", ()=>{sessionStorage.setItem("pg_source","official_doc"); evidence();});
+    on("wtp-only", "click", ()=>{sessionStorage.setItem("pg_source","pricing"); evidence();});
+    makeChart(byId("evidence-chart"), "bar", DATA.evidenceCategory.map(x=>x.name), [{label:"Rows", data:DATA.evidenceCategory.map(x=>x.value)}], {plugins:{legend:{display:false}}});
   }
 
   function report(){
@@ -167,9 +170,9 @@
     const markdown=PG.reportMarkdown(DATA,state,ft,recs,breakdown);
     const body = `<section class="report-layout"><aside class="card report-side"><div class="score-ring"><span>${breakdown.total}</span><small>/100</small></div><h3>Report actions</h3><button class="btn primary wide-btn" id="download-md">Download Markdown Report</button><button class="btn secondary wide-btn" id="download-json">Download JSON Report</button><button class="btn secondary wide-btn" id="copy-summary">Copy Executive Summary</button>${PG.routeButton("Start New Health Check", "health-check", "ghost wide-btn")}</aside><article class="paper-report"><h1>PineGuard Strategy Health Report</h1><p class="lead">Generated for ${PG.esc(state.style)} · ${PG.esc(state.market)} · ${PG.esc(state.risk)} risk</p>${Object.entries(breakdown.categories).map(([k,v])=>PG.progress(k,v.score,v.max)).join("")}<h2>Executive summary</h2><p>PineGuard evaluated the selected TradingView-style workflow using static alert logs, market snapshots, strategy templates, and public evidence data. The current health score is <strong>${breakdown.total}/100</strong>. This score measures workflow completeness and evidence quality, not trading profitability.</p><h2>Main risks detected</h2><ul>${breakdown.gaps.filter(g=>!g.ok).map(g=>`<li><strong>${PG.esc(g.label)}:</strong> ${PG.esc(g.detail)}</li>`).join("") || "<li>No major missing workflow components under this profile.</li>"}</ul><h2>Recommended templates</h2><ul>${recs.map(r=>`<li><strong>${PG.esc(r.name)}</strong>: ${PG.esc(r.description)}</li>`).join("")}</ul><h2>Disclaimer</h2><p>This academic prototype is not investment advice and does not execute trades.</p></article></section>`;
     shell("Generated Report", "The concrete paid output PineGuard would monetize.", body);
-    document.getElementById("download-md").onclick=()=>PG.downloadText("pineguard_strategy_health_report.md", markdown, "text/markdown");
-    document.getElementById("download-json").onclick=()=>PG.downloadText("pineguard_report.json", JSON.stringify({state, breakdown, forward_tests:ft.slice(0,10), recommendations:recs}, null, 2), "application/json");
-    document.getElementById("copy-summary").onclick=()=>PG.copyText(markdown.split("## Health Score Breakdown")[0]).then(()=>document.getElementById("copy-summary").textContent="Copied");
+    on("download-md", "click", ()=>PG.downloadText("pineguard_strategy_health_report.md", markdown, "text/markdown"));
+    on("download-json", "click", ()=>PG.downloadText("pineguard_report.json", JSON.stringify({state, breakdown, forward_tests:ft.slice(0,10), recommendations:recs}, null, 2), "application/json"));
+    on("copy-summary", "click", ()=>PG.copyText(markdown.split("## Health Score Breakdown")[0]).then(()=>setText("copy-summary", "Copied")));
   }
 
   function pricing(){
@@ -190,7 +193,7 @@
   function risk(){
     const riskCards=DATA.riskControls.map(r=>PG.card(r.risk, `<p>${PG.esc(r.control)}</p>${PG.badge("Controlled in prototype","green")}`)).join("");
     shell("Risk, Ethics, and Data Governance", "PineGuard is framed as workflow validation, not investment advice or execution routing.", `<section class="grid three">${riskCards}</section><section class="card"><h2>Evidence interpretation controls</h2>${PG.table(DATA.evidenceQuality,[{key:"evidence_type",label:"Evidence type"},{key:"role",label:"Role",small:true},{key:"interpretation",label:"Conservative interpretation",small:true}])}</section><section class="actions">${PG.routeButton("Open privacy and ethics doc", "docs", "primary")}<button class="btn secondary" id="download-risk">Download risk CSV</button></section>`);
-    document.getElementById("download-risk").onclick=()=>PG.downloadText("pineguard_risk_controls.csv", PG.csvFromRows(DATA.riskControls), "text/csv");
+    on("download-risk", "click", ()=>PG.downloadText("pineguard_risk_controls.csv", PG.csvFromRows(DATA.riskControls), "text/csv"));
   }
 
   function docs(){
@@ -207,9 +210,22 @@
     shell("Documentation Hub", "All supporting files are reachable from the website, so the grader does not need to hunt through the repository.", `<section class="docs-grid">${links.map(l=>`<a class="doc-card" href="${l[1]}" target="_blank"><h3>${l[0]}</h3><p>${l[2]}</p><span>Open document →</span></a>`).join("")}</section><section class="card"><h2>Static data downloads</h2><div class="download-grid"><a href="./data/pineguard_static_data.json">Combined JSON</a><a href="./data/alert_events_snapshot.csv">Alert events</a><a href="./data/market_prices_snapshot.csv">Market prices</a><a href="./data/strategy_templates.csv">Strategy templates</a><a href="./data/combined_evidence_snapshot.csv">Evidence snapshot</a><a href="./data/competitor_benchmarks.csv">Competitor benchmarks</a></div></section>`);
   }
 
-  function init(){
+  async function init(){
     PG.register("home", home); PG.register("health-check", healthCheck); PG.register("diagnosis", diagnosis); PG.register("strategy-profile", strategyProfile); PG.register("monitor", monitor); PG.register("evidence", evidence); PG.register("report", report); PG.register("pricing", pricing); PG.register("architecture", architecture); PG.register("risk", risk); PG.register("docs", docs);
-    fetch("./data/pineguard_static_data.json").then(r=>r.json()).then(d=>{ DATA=d; if(!location.hash) location.hash="#/home"; PG.render(); }).catch(err=>{ app.innerHTML=`<pre class="error">Failed to load static data: ${PG.esc(err)}</pre>`; });
+    try {
+      const response = await fetch("./data/pineguard_static_data.json");
+      DATA = await response.json();
+    } catch(err) {
+      app.innerHTML=`<pre class="error">Failed to load static data: ${PG.esc(err)}</pre>`;
+      return;
+    }
+    try {
+      if(!location.hash) location.hash="#/home";
+      PG.render();
+    } catch(err) {
+      console.error(err);
+      app.innerHTML=`<pre class="error">PineGuard loaded its static data, but rendering failed. ${PG.esc(err)}</pre>`;
+    }
   }
   init();
 })();

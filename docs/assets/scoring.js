@@ -42,9 +42,19 @@
     paid_trust: "Paid-indicator trust",
     forward_test: "No forward-test record"
   };
+  function clone(obj){ return typeof structuredClone === "function" ? structuredClone(obj) : JSON.parse(JSON.stringify(obj)); }
+  function deepMerge(base, patch){
+    const out = clone(base);
+    if(!patch || typeof patch !== "object") return out;
+    for(const [k,v] of Object.entries(patch)){
+      if(v && typeof v === "object" && !Array.isArray(v) && out[k] && typeof out[k] === "object" && !Array.isArray(out[k])) out[k] = {...out[k], ...v};
+      else if(k in out) out[k] = v;
+    }
+    return out;
+  }
   function loadState(){
-    try { return Object.assign({}, defaultState, JSON.parse(localStorage.getItem("pineguard_state") || "{}")); }
-    catch { return structuredClone(defaultState); }
+    try { return deepMerge(defaultState, JSON.parse(localStorage.getItem("pineguard_state") || "{}")); }
+    catch { return clone(defaultState); }
   }
   function saveState(s){ localStorage.setItem("pineguard_state", JSON.stringify(s)); }
   function recommendTemplates(DATA, style, persona){
