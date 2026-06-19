@@ -53,31 +53,67 @@
 \newcommand{\LiveURL}{\href{https://r12922076.github.io/bda\_final/}{https://r12922076.github.io/bda\_final/}}
 
 \begin{document}
+
 \begin{titlepage}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture,overlay]
-  \fill[Navy] (current page.north west) rectangle ([yshift=-8.9cm]current page.north east);
-  \fill[Green] ([xshift=-1.6cm,yshift=-2.4cm]current page.north east) circle (3.2cm);
-  \fill[Mint,opacity=.17] ([xshift=-.4cm,yshift=-7.5cm]current page.north east) circle (5.2cm);
+  \fill[Light] (current page.south west) rectangle (current page.north east);
+  \fill[Navy] (current page.north west) rectangle ([yshift=-12.9cm]current page.north east);
+  \fill[Green] ([xshift=-3.15cm,yshift=-2.25cm]current page.north east) circle (2.25cm);
+  \fill[Mint,opacity=.15] ([xshift=-4.05cm,yshift=-6.85cm]current page.north east) circle (2.80cm);
+  \draw[Green,line width=1.2pt] ([xshift=1.9cm,yshift=-12.9cm]current page.north west) -- ([xshift=-1.9cm,yshift=-12.9cm]current page.north east);
 \end{tikzpicture}
-\vspace*{0.6cm}
+\vspace*{0.45cm}
 {\sffamily\bfseries\color{Mint}\large Big Data Systems Final Project}\par
-\vspace{1.05cm}
-{\sffamily\bfseries\color{white}\fontsize{30}{34}\selectfont PineGuard}\par
-\vspace{0.28cm}
-{\sffamily\bfseries\color{white}\fontsize{15.5}{20}\selectfont TradingView Strategy Workflow Trust Layer}\par
-\vspace{0.12cm}
-{\sffamily\bfseries\color{white}\fontsize{13.2}{18}\selectfont Monetizing TradingView strategy workflow validation}\par
 \vspace{0.85cm}
-{\sffamily\color{Green}\large Student ID: r12323059}\par
-{\sffamily\color{white}\large GitHub Repository: \RepoURL}\par
-{\sffamily\color{Slate}\large Live Demo: \LiveURL}\par
+{\sffamily\bfseries\color{white}\fontsize{34}{38}\selectfont PineGuard}\par
+\vspace{0.25cm}
+{\sffamily\bfseries\color{white}\fontsize{16.5}{21}\selectfont TradingView Strategy Workflow Trust Layer}\par
+\vspace{0.12cm}
+{\sffamily\color{Mint}\fontsize{12.5}{17}\selectfont Monetizing auditable strategy workflow validation, not trading alpha}\par
+\vspace{0.55cm}
+{\sffamily\small\color{white}%
+\fcolorbox{Mint}{Navy}{\strut\hspace{0.45em}Data product\hspace{0.45em}}\hspace{0.45em}%
+\fcolorbox{Mint}{Navy}{\strut\hspace{0.45em}Static deployed prototype\hspace{0.45em}}\hspace{0.45em}%
+\fcolorbox{Mint}{Navy}{\strut\hspace{0.45em}Evidence-backed report\hspace{0.45em}}% 
+}\par
+\vspace{0.62cm}
+\begin{tcolorbox}[enhanced,width=.90\textwidth,colback=white,colframe=white,boxrule=0pt,arc=3mm,left=3.5mm,right=3.5mm,top=2.8mm,bottom=2.8mm]
+\sffamily\small\color{Navy}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries\color{Slate}}p{4.2cm}X@{}}
+Student ID & \textcolor{Green}{\textbf{r12323059}} \\
+GitHub Repository & \RepoURL \\
+Live Demo & \LiveURL \\
+\end{tabularx}
+\end{tcolorbox}
+
+\vspace{2.55cm}
+\noindent
+\begin{minipage}[t]{0.31\textwidth}
+\begin{tcolorbox}[enhanced,colback=white,colframe=Border,boxrule=0.45pt,arc=3mm,left=2.5mm,right=2.5mm,top=2mm,bottom=2mm,height=3.15cm]
+{\sffamily\bfseries\color{Green}Initial wedge}\par\vspace{0.12cm}
+{\sffamily\small \raggedright\hyphenpenalty=10000\exhyphenpenalty=10000 Paid users with alert logs ready for review.}
+\end{tcolorbox}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.31\textwidth}
+\begin{tcolorbox}[enhanced,colback=white,colframe=Border,boxrule=0.45pt,arc=3mm,left=2.5mm,right=2.5mm,top=2mm,bottom=2mm,height=3.15cm]
+{\sffamily\bfseries\color{Green}Monetized data}\par\vspace{0.12cm}
+{\sffamily\small \raggedright\hyphenpenalty=10000\exhyphenpenalty=10000 Alerts, metadata, evidence labels, rules, and report log.}
+\end{tcolorbox}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.31\textwidth}
+\begin{tcolorbox}[enhanced,colback=white,colframe=Border,boxrule=0.45pt,arc=3mm,left=2.5mm,right=2.5mm,top=2mm,bottom=2mm,height=3.15cm]
+{\sffamily\bfseries\color{Green}Delivered product}\par\vspace{0.12cm}
+{\sffamily\small \raggedright\hyphenpenalty=10000\exhyphenpenalty=10000 Report, monitor, explorer, and tour.}
+\end{tcolorbox}
+\end{minipage}
+
 \vfill
 \begin{claimbox}
-\sffamily\textbf{Core thesis.} PineGuard does not sell trading signals, promise returns, or execute trades. It monetizes auditable workflow validation around TradingView-style strategies by converting alert-event logs, strategy metadata, static market snapshots, evidence labels, and user-selected profile data into a paid strategy health report and monitoring dashboard.
+\sffamily\textbf{Core thesis.} PineGuard does not sell trading signals, promise returns, or execute trades. It converts fragmented TradingView-style workflow data into an auditable paid health report and monitoring dashboard.
 \end{claimbox}
-\vspace{0.7cm}
-{\sffamily\small National Taiwan University \hfill June 2026}\par
+\vspace{0.55cm}
+{\sffamily\small\color{Slate}National Taiwan University \hfill June 2026}\par
 \end{titlepage}
 
 \tableofcontents
