@@ -1,17 +1,18 @@
-# Final Project Rubric Mapping
+# Rubric Mapping
 
-This file maps the submitted PineGuard repository to the expected final-project components.
+This file maps the final-project requirements to the deployed PineGuard artifact.
 
-| Requirement | Repository evidence |
+| Requirement | Where to inspect |
 |---|---|
-| Target customer | `README.md`, report Section 2, customer segmentation table. |
-| Demand evidence | `docs/data/combined_evidence_snapshot.csv`, `docs/data_acquisition.md`, report Section 3. |
-| Willingness to pay | Report Section 3.3 and pricing/product-tier logic in Section 4. |
-| Technical design | `docs/architecture.md`, report Section 5, `docs/data_dictionary.md`. |
-| Implementation | `docs/index.html`, `docs/assets/app.js`, `docs/assets/style.css`. |
-| Reproducibility | `scripts/build_static_site.py`, downloadable CSV/JSON files under `docs/data/`. |
-| Deployment | GitHub Pages from the `/docs` folder. |
-| Go-to-market risks | `docs/privacy_and_ethics.md`, report Sections 7 and 8. |
-| Bonus: deployment | Live demo at `https://r12922076.github.io/bda_final/`. |
+| Target customer specificity | `#/home`, `#/health-check`, `#/pricing`, PDF report Section 2 |
+| Evidence of demand and WTP | `#/evidence`, `docs/evidence_methodology.md`, `docs/competitor_benchmarks.md`, `docs/data/combined_evidence_snapshot.csv`, PDF report Section 3 |
+| Full data-acquisition process | `docs/evidence_methodology.md`, `docs/data_lineage.md`, `scripts/build_static_site.py`, `docs/data_contract.md` |
+| Technical architecture | `#/architecture`, `docs/architecture.md`, `docs/production_architecture.md`, PDF report Section 5 |
+| Storage and processing design | `#/architecture`, `docs/data_contract.md`, `docs/data_lineage.md` |
+| Delivery mechanism | `#/report`, `#/monitor`, GitHub Pages live deployment |
+| Repository reproducibility | `README.md`, `scripts/validate_static_site.py`, `scripts/frontend_smoke_test.js` |
+| Go-to-market difficulties | `#/risk`, `docs/risk_register.md`, PDF report Section 7 |
+| Unit economics | `#/pricing`, `docs/scale_and_unit_economics.md`, PDF report Section 7 |
+| Working deployment | `https://r12922076.github.io/bda_final/` |
 
-The repository intentionally avoids a private backend so graders can inspect the complete deployed artifact directly from GitHub Pages.
+Recommended grader path: open `#/tour` first.

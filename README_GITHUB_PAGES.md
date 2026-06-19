@@ -144,7 +144,7 @@ An optional GitHub Actions workflow is also provided in `.github/workflows/pages
 
 This is an academic prototype. The deployed website uses static snapshots, so it does not collect new user data, receive live webhooks, or update market data after deployment. A production version would require user-authorized event ingestion, persistent storage, scheduled report recomputation, and a security model for private user strategy data.
 
-PineGuard is not investment advice, does not execute trades, and does not promise profitable strategies. It is a workflow validation and monitoring product.
+PineGuard is not investment advice, does not execute trades, and does not promise profitable strategies. It is a workflow validation and monitoring product. Its score measures workflow completeness and evidence quality, not trading profitability.
 
 ## Production extension
 
@@ -159,3 +159,10 @@ A production version would use:
 - near-real-time jobs for alert monitoring and anomaly detection.
 
 The static website is therefore the public demonstration layer, while the proposed production architecture is the scalable data-product layer.
+
+
+## Evidence governance added in the final refinement
+
+The final version separates direct technical evidence, adjacent willingness-to-pay benchmarks, public pain signals, and weaker demand proxies. Public-evidence personas are explicitly labeled as synthetic personas rather than interviews. The repository therefore supports a conservative claim: PineGuard has a defensible beachhead hypothesis, not proven product-market fit.
+
+The first beachhead remains alert-heavy paid TradingView users. Paid-script buyer analysis and Creator Trust Reports are treated as expansion paths, not the initial market wedge.

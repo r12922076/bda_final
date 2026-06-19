@@ -49,7 +49,7 @@
           <span class="pill">Static GitHub Pages deployment · Browser-side analytics</span>
           <h2>Turn TradingView strategy workflow data into evidence-backed health reports.</h2>
           <p>PineGuard is a data-monetization prototype for paid TradingView power users. It does not sell trading signals. It sells validation structure around alerts, strategy metadata, forward-test outcomes, and public evidence.</p>
-          <div class="actions">${PG.routeButton("Start Strategy Health Check", "health-check", "primary")}${PG.routeButton("View Sample Report", "report", "secondary")}${PG.routeButton("Explore Demand Evidence", "evidence", "ghost")}</div>
+          <div class="actions">${PG.routeButton("Start Strategy Health Check", "health-check", "primary")}${PG.routeButton("Grader Quick Tour", "tour", "secondary")}${PG.routeButton("View Sample Report", "report", "secondary")}${PG.routeButton("Explore Demand Evidence", "evidence", "ghost")}</div>
         </div>
         <div class="hero-panel">
           <div class="score-ring"><span>${breakdown.total}</span><small>/100</small></div>
@@ -58,6 +58,8 @@
           <div class="mini-grid">${PG.metric("Alerts", DATA.alerts.length, "snapshot")}${PG.metric("Evidence rows", DATA.evidence.length, "public traces")}</div>
         </div>
       </section>
+      <section class="card wide beachhead-card"><h2>Initial wedge: alert-heavy paid TradingView users</h2><p>PineGuard starts with users who already generate TradingView alert-event data but lack a structured forward-test and validation workflow. Pine Script builders, paid-script buyers, no-code users, and creators are expansion segments, not the initial beachhead.</p></section>
+      <section class="grid two wide"><div class="card"><h2>What data is monetized?</h2><p>PineGuard monetizes structured interpretation of workflow data: alert-event history, strategy metadata, backtest-assumption metadata, forward-test outcomes, evidence labels, and report history.</p><p class="muted">The paid output is auditable workflow validation, not trading alpha.</p></div><div class="card"><h2>Trust-layer position</h2><div class="pipeline"><div>TradingView strategy development</div><div>PineGuard validation layer</div><div>Execution bridge or manual decision</div></div><p class="muted">PineGuard sits between strategy creation and execution; it does not route orders or provide investment advice.</p></div></section>
       <section class="grid four problem-grid">
         ${PG.card("Repainting risk", `<p>Historical and realtime behavior can diverge. PineGuard flags missing review steps.</p><span class="mini-link">Health Check module</span>`)}
         ${PG.card("Backtest realism", `<p>Commission, slippage, and order assumptions affect whether Strategy Tester evidence is credible.</p><span class="mini-link">Risk flags</span>`)}
@@ -73,6 +75,12 @@
         ${PG.card("Big-data architecture", `<p>The course site is static. The production design uses webhook ingestion, queues, storage, and scheduled recomputation.</p>${PG.routeButton("Open architecture", "architecture", "link")}`)}
       </section>`;
     shell("TradingView Strategy Validation Layer", "A static single-page product demo for monetizing strategy-workflow data.", body);
+  }
+
+  function tour(){
+    const rows = DATA.graderTour || [];
+    const body = `<section class="grid two"><div class="card"><h2>Quick evaluation path</h2><p class="muted">This page is designed for graders who want to evaluate the artifact quickly without guessing where each requirement is addressed.</p>${PG.table(rows,[{key:"step",label:"Step"},{key:"route",label:"Route",render:r=>`<a href="${PG.esc(r.route)}">${PG.esc(r.route)}</a>`},{key:"what_to_check",label:"What to check",small:true}])}</div><div class="card"><h2>Rubric mapping</h2><div class="action-list"><a href="#/health-check">Target customer and workflow onboarding</a><a href="#/evidence">Demand evidence and WTP benchmarks</a><a href="#/architecture">Technical architecture and scalability</a><a href="#/report">Paid report output</a><a href="#/risk">Go-to-market and data governance risks</a><a href="rubric_mapping.md" target="_blank">Open rubric mapping document</a></div></div></section>`;
+    shell("Grader Quick Tour", "A two-minute path through the deployed system and repository evidence.", body, PG.routeButton("Start Health Check", "health-check", "primary"));
   }
 
   function healthCheck(){
@@ -151,42 +159,59 @@
   function evidence(){
     const categories=[...new Set(DATA.evidence.map(e=>e.pain_category))].sort();
     const sources=[...new Set(DATA.evidence.map(e=>e.source_type))].sort();
+    const strengths=[...new Set(DATA.evidence.map(e=>e.evidence_strength || "Unrated"))].sort();
     const currentCat=sessionStorage.getItem("pg_cat") || "all";
     const currentSource=sessionStorage.getItem("pg_source") || "all";
-    const rows=DATA.evidence.filter(e=>(currentCat==="all"||e.pain_category===currentCat)&&(currentSource==="all"||e.source_type===currentSource));
-    const body = `<section class="grid two"><div class="card"><h2>Evidence filters</h2><div class="form-grid two-cols"><label>Pain category<select id="filter-cat"><option value="all">All categories</option>${categories.map(x=>`<option value="${PG.esc(x)}" ${currentCat===x?'selected':''}>${PG.esc(x)}</option>`).join("")}</select></label><label>Source type<select id="filter-source"><option value="all">All source types</option>${sources.map(x=>`<option value="${PG.esc(x)}" ${currentSource===x?'selected':''}>${PG.esc(x)}</option>`).join("")}</select></label></div><div class="actions mt"><button class="btn secondary" id="strong-only">Show strong evidence</button><button class="btn secondary" id="wtp-only">Show WTP evidence</button><button class="btn primary" id="export-evidence">Export evidence CSV</button></div></div><div class="card"><h2>Evidence summary</h2><div class="grid two mini-metrics">${PG.metric("Visible rows", rows.length, "after filters")}${PG.metric("Total rows", DATA.evidence.length, "snapshot")}</div><div class="chartbox small"><canvas id="evidence-chart"></canvas></div></div></section>
-      <section class="evidence-grid">${rows.slice(0,18).map(e=>`<article class="evidence-card"><div>${PG.badge(e.source_type,"blue")} ${PG.badge(e.pain_category,"neutral")}</div><h3>${PG.esc((e.url||"").replace(/^https?:\/\//,'').slice(0,70))}</h3><p>${PG.esc(e.short_evidence || e.why_relevant || "Evidence row")}</p><p class="muted"><strong>How it supports PineGuard:</strong> ${PG.esc(e.why_relevant || "Supports evidence-backed product design.")}</p><a href="${PG.esc(e.url)}" target="_blank" rel="noreferrer">Open source</a></article>`).join("")}</section>`;
+    const currentStrength=sessionStorage.getItem("pg_strength") || "all";
+    const rows=DATA.evidence.filter(e=>(currentCat==="all"||e.pain_category===currentCat)&&(currentSource==="all"||e.source_type===currentSource)&&(currentStrength==="all"||(e.evidence_strength||"Unrated")===currentStrength));
+    const body = `<section class="grid two"><div class="card"><h2>Evidence filters</h2><div class="form-grid two-cols"><label>Pain category<select id="filter-cat"><option value="all">All categories</option>${categories.map(x=>`<option value="${PG.esc(x)}" ${currentCat===x?'selected':''}>${PG.esc(x)}</option>`).join("")}</select></label><label>Source type<select id="filter-source"><option value="all">All source types</option>${sources.map(x=>`<option value="${PG.esc(x)}" ${currentSource===x?'selected':''}>${PG.esc(x)}</option>`).join("")}</select></label><label>Evidence strength<select id="filter-strength"><option value="all">All strengths</option>${strengths.map(x=>`<option value="${PG.esc(x)}" ${currentStrength===x?'selected':''}>${PG.esc(x)}</option>`).join("")}</select></label></div><div class="actions mt"><button class="btn secondary" id="strong-only">Show strong evidence</button><button class="btn secondary" id="wtp-only">Show WTP evidence</button><button class="btn primary" id="export-evidence">Export evidence CSV</button></div></div><div class="card"><h2>Evidence summary</h2><div class="grid two mini-metrics">${PG.metric("Visible rows", rows.length, "after filters")}${PG.metric("Strong rows", DATA.evidence.filter(e=>(e.evidence_strength||"")==="Strong").length, "official docs")}</div><div class="chartbox small"><canvas id="evidence-chart"></canvas></div></div></section>
+      <section class="card wide"><h2>How to read this evidence</h2><p><strong>Strong</strong> rows are official documentation, academic references, or primary platform evidence. <strong>Medium</strong> rows are public discussions, professional articles, or adjacent-product pages. <strong>Weak</strong> rows are isolated marketplace or promotional signals.</p><p class="muted">This evidence supports a defensible beachhead hypothesis. It does not prove product-market fit or a representative demand curve.</p><div class="actions">${PG.routeButton("Open evidence governance", "docs", "secondary")}</div></section>
+      <section class="evidence-grid">${rows.slice(0,18).map(e=>`<article class="evidence-card"><div>${PG.badge(e.evidence_strength||"Unrated", (e.evidence_strength==="Strong")?"green":(e.evidence_strength==="Medium")?"amber":"neutral")} ${PG.badge(e.source_type,"blue")} ${PG.badge(e.pain_category,"neutral")}</div><h3>${PG.esc((e.url||"").replace(/^https?:\/\//,'').slice(0,70))}</h3><p>${PG.esc(e.short_evidence || e.why_relevant || "Evidence row")}</p><p class="muted"><strong>Role:</strong> ${PG.esc(e.evidence_role || "Evidence row")}</p><p class="muted"><strong>How it supports PineGuard:</strong> ${PG.esc(e.why_relevant || "Supports evidence-backed product design.")}</p><a href="${PG.esc(e.url)}" target="_blank" rel="noreferrer">Open source</a></article>`).join("")}</section>`;
     shell("Evidence Explorer", "Filter official docs, public traces, competitor benchmarks, and product-evidence mappings.", body);
     on("filter-cat", "input", e=>{sessionStorage.setItem("pg_cat", e.target.value); evidence();});
     on("filter-source", "input", e=>{sessionStorage.setItem("pg_source", e.target.value); evidence();});
+    on("filter-strength", "input", e=>{sessionStorage.setItem("pg_strength", e.target.value); evidence();});
     on("export-evidence", "click", ()=>PG.downloadText("pineguard_evidence_export.csv", PG.csvFromRows(rows), "text/csv"));
-    on("strong-only", "click", ()=>{sessionStorage.setItem("pg_source","official_doc"); evidence();});
-    on("wtp-only", "click", ()=>{sessionStorage.setItem("pg_source","pricing"); evidence();});
-    makeChart(byId("evidence-chart"), "bar", DATA.evidenceCategory.map(x=>x.name), [{label:"Rows", data:DATA.evidenceCategory.map(x=>x.value)}], {plugins:{legend:{display:false}}});
+    on("strong-only", "click", ()=>{sessionStorage.setItem("pg_strength","Strong"); evidence();});
+    on("wtp-only", "click", ()=>{sessionStorage.setItem("pg_source","pricing"); sessionStorage.setItem("pg_strength","all"); evidence();});
+    makeChart(byId("evidence-chart"), "bar", DATA.evidenceStrength.map(x=>x.name), [{label:"Rows", data:DATA.evidenceStrength.map(x=>x.value)}], {plugins:{legend:{display:false}}});
   }
 
   function report(){
     const {ft,recs,breakdown}=getComputed();
     const markdown=PG.reportMarkdown(DATA,state,ft,recs,breakdown);
-    const body = `<section class="report-layout"><aside class="card report-side"><div class="score-ring"><span>${breakdown.total}</span><small>/100</small></div><h3>Report actions</h3><button class="btn primary wide-btn" id="download-md">Download Markdown Report</button><button class="btn secondary wide-btn" id="download-json">Download JSON Report</button><button class="btn secondary wide-btn" id="copy-summary">Copy Executive Summary</button>${PG.routeButton("Start New Health Check", "health-check", "ghost wide-btn")}</aside><article class="paper-report"><h1>PineGuard Strategy Health Report</h1><p class="lead">Generated for ${PG.esc(state.style)} · ${PG.esc(state.market)} · ${PG.esc(state.risk)} risk</p>${Object.entries(breakdown.categories).map(([k,v])=>PG.progress(k,v.score,v.max)).join("")}<h2>Executive summary</h2><p>PineGuard evaluated the selected TradingView-style workflow using static alert logs, market snapshots, strategy templates, and public evidence data. The current health score is <strong>${breakdown.total}/100</strong>. This score measures workflow completeness and evidence quality, not trading profitability.</p><h2>Main risks detected</h2><ul>${breakdown.gaps.filter(g=>!g.ok).map(g=>`<li><strong>${PG.esc(g.label)}:</strong> ${PG.esc(g.detail)}</li>`).join("") || "<li>No major missing workflow components under this profile.</li>"}</ul><h2>Recommended templates</h2><ul>${recs.map(r=>`<li><strong>${PG.esc(r.name)}</strong>: ${PG.esc(r.description)}</li>`).join("")}</ul><h2>Disclaimer</h2><p>This academic prototype is not investment advice and does not execute trades.</p></article></section>`;
+    const reportId = `PG-${String(state.persona||"user").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,8)}-${breakdown.total}-${state.horizon}`;
+    const evidenceRows = DATA.evidence.length;
+    const alertRows = DATA.alerts.length;
+    const timestamp = "Static demo snapshot · June 2026";
+    const metaRows = [
+      {label:"Report ID", value:reportId},
+      {label:"Generated at", value:timestamp},
+      {label:"Strategy profile", value:`${state.style} / ${state.market} / ${state.risk}`},
+      {label:"Alert events evaluated", value:String(alertRows)},
+      {label:"Forward-test horizon", value:`${state.horizon} bars`},
+      {label:"Evidence rows used", value:String(evidenceRows)},
+      {label:"Product boundary", value:"Workflow completeness, not profitability"}
+    ];
+    const body = `<section class="report-layout"><aside class="card report-side"><div class="score-ring"><span>${breakdown.total}</span><small>/100</small></div><h3>Report actions</h3><button class="btn primary wide-btn" id="download-md">Download Markdown Report</button><button class="btn secondary wide-btn" id="download-json">Download JSON Report</button><button class="btn secondary wide-btn" id="copy-summary">Copy Executive Summary</button>${PG.routeButton("Start New Health Check", "health-check", "ghost wide-btn")}</aside><article class="paper-report"><h1>PineGuard Strategy Health Report</h1><p class="lead">Generated for ${PG.esc(state.style)} · ${PG.esc(state.market)} · ${PG.esc(state.risk)} risk</p><h2>Report metadata</h2>${PG.table(metaRows,[{key:"label",label:"Field"},{key:"value",label:"Value",small:true}])}${Object.entries(breakdown.categories).map(([k,v])=>PG.progress(k,v.score,v.max)).join("")}<h2>Executive summary</h2><p>PineGuard evaluated the selected TradingView-style workflow using static alert logs, market snapshots, strategy templates, and public evidence data. The current health score is <strong>${breakdown.total}/100</strong>. This score measures workflow completeness and evidence quality, not trading profitability.</p><h2>Main risks detected</h2><ul>${breakdown.gaps.filter(g=>!g.ok).map(g=>`<li><strong>${PG.esc(g.label)}:</strong> ${PG.esc(g.detail)}</li>`).join("") || "<li>No major missing workflow components under this profile.</li>"}</ul><h2>Recommended templates</h2><ul>${recs.map(r=>`<li><strong>${PG.esc(r.name)}</strong>: ${PG.esc(r.description)}</li>`).join("")}</ul><h2>Evidence limitation</h2><p>The report uses official documentation, public pain signals, and adjacent-product benchmarks. These sources support a beachhead hypothesis, not proven product-market fit.</p><h2>Disclaimer</h2><p>This academic prototype is not investment advice, does not execute trades, and does not evaluate expected profitability.</p></article></section>`;
     shell("Generated Report", "The concrete paid output PineGuard would monetize.", body);
     on("download-md", "click", ()=>PG.downloadText("pineguard_strategy_health_report.md", markdown, "text/markdown"));
-    on("download-json", "click", ()=>PG.downloadText("pineguard_report.json", JSON.stringify({state, breakdown, forward_tests:ft.slice(0,10), recommendations:recs}, null, 2), "application/json"));
+    on("download-json", "click", ()=>PG.downloadText("pineguard_report.json", JSON.stringify({report_id:reportId, generated_at:timestamp, state, breakdown, forward_tests:ft.slice(0,10), recommendations:recs, evidence_rows:evidenceRows}, null, 2), "application/json"));
     on("copy-summary", "click", ()=>PG.copyText(markdown.split("## Health Score Breakdown")[0]).then(()=>setText("copy-summary", "Copied")));
   }
 
   function pricing(){
     const plans=[
-      ["Strategy Health Check","$19–$49 one-time","User evaluating one strategy","Repainting/backtest/alert checklist; downloadable report","Does not include execution or investment advice"],
-      ["Forward-Test Monitor","$19–$39 / month","Alert-heavy users","Alert event log, horizon attribution, weekly report","High-frequency users require separate pricing"],
-      ["Pro Completion Plan","$39–$79 / month","Users building/refining strategies","Template library, missing-rule diagnosis, report history","Still validation-first, not signal generation"],
-      ["Creator Trust Report","Later expansion","Creators with sufficient live history","Credibility report and evidence basis","Weaker evidence; expansion product only"]
+      ["Strategy Health Check","$19–$49 one-time","User evaluating one strategy","Repainting/backtest/alert checklist; downloadable report","Does not include execution or investment advice","Adjacent benchmark: trading journals and strategy-testing tools."],
+      ["Forward-Test Monitor","$19–$39 / month","Alert-heavy users","Alert event log, horizon attribution, weekly report","High-frequency users require separate pricing","Adjacent benchmark: webhook automation and paid TradingView workflows."],
+      ["Pro Completion Plan","$39–$79 / month","Users building/refining strategies","Template library, missing-rule diagnosis, report history","Still validation-first, not signal generation","Adjacent benchmark: Pine tooling and strategy development products."],
+      ["Creator Trust Report","Later expansion","Creators with sufficient live history","Credibility report and evidence basis","Weaker evidence; expansion product only","Evidence basis is weaker; use only after enough live history exists."]
     ];
-    shell("Pricing and Revenue Funnel", "SaaS-style packaging connects product outputs to willingness-to-pay benchmarks.", `<section class="pricing-grid">${plans.map(p=>`<article class="price-card"><h3>${p[0]}</h3><div class="price">${p[1]}</div><p><strong>For:</strong> ${p[2]}</p><p><strong>Includes:</strong> ${p[3]}</p><p class="muted"><strong>Boundary:</strong> ${p[4]}</p></article>`).join("")}</section><section class="card"><h2>Unit economics logic</h2>${PG.table(DATA.scaleEconomics,[{key:"scale",label:"Scale"},{key:"expected_workload",label:"Workload",small:true},{key:"cost_driver",label:"Cost driver",small:true}])}</section>`);
+    shell("Pricing and Revenue Funnel", "SaaS-style packaging connects product outputs to willingness-to-pay benchmarks.", `<section class="pricing-grid">${plans.map(p=>`<article class="price-card"><h3>${p[0]}</h3><div class="price">${p[1]}</div><p><strong>For:</strong> ${p[2]}</p><p><strong>Includes:</strong> ${p[3]}</p><p><strong>Evidence basis:</strong> ${p[5]}</p><p class="muted"><strong>Boundary:</strong> ${p[4]}</p></article>`).join("")}</section><section class="card"><h2>Unit economics logic</h2>${PG.table(DATA.scaleEconomics,[{key:"scale",label:"Scale"},{key:"expected_workload",label:"Workload",small:true},{key:"cost_driver",label:"Cost driver",small:true}])}</section>`);
   }
 
   function architecture(){
-    const body = `<section class="grid two"><div class="card"><h2>Course deployment</h2><div class="pipeline"><div>CSV / JSON snapshots</div><div>GitHub Pages</div><div>Browser analytics</div><div>Report preview</div></div><p class="muted">This deployed version intentionally pre-builds data and runs client-side analytics because GitHub Pages is static.</p></div><div class="card"><h2>Production deployment</h2><div class="pipeline production"><div>TradingView webhook</div><div>API endpoint</div><div>Queue</div><div>Workers</div><div>Database / object storage</div><div>Dashboard</div></div><p class="muted">Commercial PineGuard would use consent-based ingestion, durable queues, idempotency, storage, and scheduled recomputation.</p></div></section><section class="card"><h2>Production layers</h2>${PG.table(DATA.productionLayers,[{key:"layer",label:"Layer"},{key:"design",label:"Design",small:true},{key:"why",label:"Why it matters",small:true}])}</section><section class="card"><h2>Prototype-to-production scale path</h2>${PG.table(DATA.scaleEconomics,[{key:"scale",label:"Scale"},{key:"expected_workload",label:"Expected workload",small:true},{key:"architecture_implication",label:"Architecture implication",small:true},{key:"cost_driver",label:"Cost driver",small:true}])}</section>`;
+    const body = `<section class="grid two"><div class="card"><h2>Course deployment</h2><div class="pipeline"><div>CSV / JSON snapshots</div><div>GitHub Pages</div><div>Browser analytics</div><div>Report preview</div></div><p class="muted">This deployed version intentionally pre-builds data and runs client-side analytics because GitHub Pages is static.</p></div><div class="card"><h2>Production deployment</h2><div class="pipeline production"><div>TradingView webhook</div><div>API endpoint</div><div>Queue</div><div>Workers</div><div>Database / object storage</div><div>Dashboard</div></div><p class="muted">Commercial PineGuard would use consent-based ingestion, durable queues, idempotency, storage, and scheduled recomputation.</p></div></section><section class="card"><h2>Prototype boundary and production extension</h2><p>The course artifact uses static JSON/CSV and browser-side JavaScript. It does not receive live webhooks or store private user strategy data. A production version could add DuckDB-Wasm or another local-analytics layer for privacy-preserving report generation, but that is an extension rather than a claim about the current demo.</p></section><section class="card"><h2>Production layers</h2>${PG.table(DATA.productionLayers,[{key:"layer",label:"Layer"},{key:"design",label:"Design",small:true},{key:"why",label:"Why it matters",small:true}])}</section><section class="card"><h2>Prototype-to-production scale path</h2>${PG.table(DATA.scaleEconomics,[{key:"scale",label:"Scale"},{key:"expected_workload",label:"Expected workload",small:true},{key:"architecture_implication",label:"Architecture implication",small:true},{key:"cost_driver",label:"Cost driver",small:true}])}</section>`;
     shell("System Architecture", "Static course artifact plus production event-driven architecture.", body);
   }
 
@@ -200,6 +225,12 @@
     const links=[
       ["Architecture overview","architecture.md","Production and course-deployment architecture."],
       ["Data acquisition methodology","evidence_methodology.md","How evidence rows were collected and coded."],
+      ["Grader guide","grader_guide.md","Two-minute route through the deployed demo and repository."],
+      ["Data lineage","data_lineage.md","Evidence and runtime data flow from seed sources to report output."],
+      ["Data contract","data_contract.md","Required fields, assumptions, and validation checks."],
+      ["Evidence governance","evidence_governance.md","Evidence-strength labels, limitations, and conservative demand claims."],
+      ["Public-evidence personas","public_evidence_personas.md","Synthetic personas derived from public evidence; not interviews."],
+      ["Platform and legal risk notes","platform_and_legal_risk_notes.md","Platform dependency, privacy, and investment-advice boundaries."],
       ["Data dictionary","data_dictionary.md","Runtime data files and fields."],
       ["Production architecture","production_architecture.md","Webhook, queue, storage, and processing extension."],
       ["Risk register","risk_register.md","Platform, privacy, and investment-advice controls."],
@@ -211,7 +242,7 @@
   }
 
   async function init(){
-    PG.register("home", home); PG.register("health-check", healthCheck); PG.register("diagnosis", diagnosis); PG.register("strategy-profile", strategyProfile); PG.register("monitor", monitor); PG.register("evidence", evidence); PG.register("report", report); PG.register("pricing", pricing); PG.register("architecture", architecture); PG.register("risk", risk); PG.register("docs", docs);
+    PG.register("home", home); PG.register("tour", tour); PG.register("health-check", healthCheck); PG.register("diagnosis", diagnosis); PG.register("strategy-profile", strategyProfile); PG.register("monitor", monitor); PG.register("evidence", evidence); PG.register("report", report); PG.register("pricing", pricing); PG.register("architecture", architecture); PG.register("risk", risk); PG.register("docs", docs);
     try {
       const response = await fetch("./data/pineguard_static_data.json");
       DATA = await response.json();

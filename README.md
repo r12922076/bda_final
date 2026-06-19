@@ -170,7 +170,7 @@ An optional GitHub Actions workflow is also provided in `.github/workflows/pages
 
 This is an academic prototype. The deployed website uses static snapshots, so it does not collect new user data, receive live webhooks, or update market data after deployment. A production version would require user-authorized event ingestion, persistent storage, scheduled report recomputation, and a security model for private user strategy data.
 
-PineGuard is not investment advice, does not execute trades, and does not promise profitable strategies. It is a workflow validation and monitoring product.
+PineGuard is not investment advice, does not execute trades, and does not promise profitable strategies. It is a workflow validation and monitoring product. Its score measures workflow completeness and evidence quality, not trading profitability.
 
 ## Production extension
 
@@ -197,3 +197,41 @@ The repository includes several grading-oriented documents:
 - `docs/risk_register.md`: summarizes platform, privacy, and investment-advice risks.
 
 These documents are included so the project can be evaluated as a data product and system design, not only as a static website.
+
+## High-score polish added in the final version
+
+The deployed artifact has been upgraded from a flat static page to a product-style static SPA. The main grader-facing route is:
+
+- `#/tour`: a two-minute Grader Quick Tour that links the demo screens to the rubric.
+
+Additional documentation:
+
+- `docs/grader_guide.md`: recommended path for evaluating the deployed system.
+- `docs/data_lineage.md`: source-to-report data lineage.
+- `docs/data_contract.md`: required fields and runtime data assumptions.
+- `docs/evidence_governance.md`: evidence-strength labels and limitations.
+- `docs/public_evidence_personas.md`: public-evidence-derived personas; not direct interviews.
+- `docs/platform_and_legal_risk_notes.md`: platform, privacy, and investment-advice boundaries.
+
+Additional validation:
+
+```bash
+python scripts/validate_static_site.py
+node scripts/frontend_smoke_test.js
+```
+
+The smoke test is dependency-free and checks route registration, required data keys, evidence-strength fields, and expected frontend assets.
+
+Evidence rows now include `evidence_strength` and `evidence_role` fields, allowing the Evidence Explorer to distinguish official technical evidence, willingness-to-pay benchmarks, adjacent-product evidence, and weaker demand proxies.
+
+
+## PDF report
+
+The current synchronized report is included at `report/r12323059.pdf`, with source at `report/report.tex`. The required submission PDF should be named `r12323059.pdf`.
+
+
+## Evidence governance added in the final refinement
+
+The final version separates direct technical evidence, adjacent willingness-to-pay benchmarks, public pain signals, and weaker demand proxies. Public-evidence personas are explicitly labeled as synthetic personas rather than interviews. The repository therefore supports a conservative claim: PineGuard has a defensible beachhead hypothesis, not proven product-market fit.
+
+The first beachhead remains alert-heavy paid TradingView users. Paid-script buyer analysis and Creator Trust Reports are treated as expansion paths, not the initial market wedge.

@@ -2,7 +2,8 @@
   "meta": {
     "project": "PineGuard",
     "student_id": "r12323059",
-    "version": "GitHub Pages Static Prototype v2",
+    "version": "GitHub Pages Static SPA v3 high-score polish",
+    "routes": "home, health-check, diagnosis, strategy-profile, monitor, evidence, report, pricing, architecture, risk, docs, tour",
     "build_type": "static browser app",
     "data_mode": "pre-downloaded JSON/CSV snapshots",
     "runtime_note": "No Python backend is required after deployment."
@@ -9070,7 +9071,9 @@
       "short_evidence": "Concepts / Repainting Version Version 6 Version 5 Version 4 Version 3 Theme Dark Light Auto Welcome to Pine Script\u00ae v6 Pine Script\u00ae primer First steps First indicator Next steps Language Execution model Type system Script structure Identifiers Declaration statements Variable declarations Operators Conditional structures Loops Built-ins User-defined",
       "why_relevant": "Automated crawler found keyword evidence for repainting_or_lookahead.",
       "usable_in_report": "yes",
-      "strength_score": "195"
+      "strength_score": "195",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "crawler",
@@ -9080,7 +9083,9 @@
       "short_evidence": " User-defined functions Objects Enums Methods Arrays Matrices Maps Visuals Overview Backgrounds Bar coloring Bar plotting Colors Fills Levels Lines and boxes Plots Tables Text and shapes Concepts Alerts Bar states Chart information Inputs Libraries Non-standard charts data Other timeframes and data Repainting Sessions Strategies Strings Time Timefr",
       "why_relevant": "Automated crawler found keyword evidence for backtest_realism.",
       "usable_in_report": "yes",
-      "strength_score": "222"
+      "strength_score": "222",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "crawler",
@@ -9090,7 +9095,9 @@
       "short_evidence": " User-defined functions Objects Enums Methods Arrays Matrices Maps Visuals Overview Backgrounds Bar coloring Bar plotting Colors Fills Levels Lines and boxes Plots Tables Text and shapes Concepts Alerts Bar states Chart information Inputs Libraries Non-standard charts data Other timeframes and data Repainting Sessions Strategies Strings Time Timefr",
       "why_relevant": "Automated crawler found keyword evidence for repainting_or_lookahead.",
       "usable_in_report": "yes",
-      "strength_score": "373"
+      "strength_score": "373",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "crawler",
@@ -9100,7 +9107,9 @@
       "short_evidence": "How to configure webhook alerts \u2014 TradingView Search EN Get started How to configure webhook alerts A TradingView webhook notifies your external app when an alert is triggered. Instead of manually checking charts, we can automatically send data via an HTTP POST request to a URL you provide. This feature can be enabled when you create or edit an ale",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "31"
+      "strength_score": "31",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "crawler",
@@ -9110,7 +9119,9 @@
       "short_evidence": "mobile app to get notified on your phone Toast notification: When enabled, a pop-up message will appear even if you are browsing in another tab. For this feature to work correctly, allow TradingView to show desktop notifications Email: Alerts are sent to the email address from your profile settings Webhook URL : Sends a POST request to a certain UR",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "72"
+      "strength_score": "72",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "crawler",
@@ -9120,7 +9131,9 @@
       "short_evidence": "How to get more active alerts per subscription \u2014 TradingView Search EN Get started How to get more active alerts per subscription At the moment, the current limits are as follows: Premium Plan : 800 active alerts (400 price alerts + 400 technical alerts). Ultimate Plan : 2000 active alerts (1000 price alerts + 1000 technical alerts). The lower plan",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "11"
+      "strength_score": "11",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "crawler",
@@ -9130,7 +9143,9 @@
       "short_evidence": " default 1-day time interval Studies settings and time intervals can be changed in the indicator dropdown. When the selected indicator is loaded, the following conditions are applied: The first ten plots are added for subsequent filter configuration These plots are added to the table as columns Two alert conditions from the script are added The opt",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "6"
+      "strength_score": "6",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "crawler",
@@ -9140,7 +9155,9 @@
       "short_evidence": "r indicators 100K+ community-powered indicators Indicator on indicator 1 1 9 24 49 Indicators per chart 2 5 10 25 50 Financials per chart 1 4 7 10 25 Custom indicator templates 1 110+ smart drawing tools Volume Profile indicators Time Price Opportunities Volume footprint Volume candles Pine Script\u00ae Backtesting for trading strategies Export strategy",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "74"
+      "strength_score": "74",
+      "evidence_strength": "Medium",
+      "evidence_role": "WTP benchmark evidence"
     },
     {
       "evidence_origin": "crawler",
@@ -9150,7 +9167,9 @@
       "short_evidence": "Non-repaint \u2014 Indicators and Strategies \u2014 TradingView Search EN Get started All types All types Open-source only Most recent Most popular Tema RSI Return + Trend + Impulse Filter TEMA 9 RSI Return + Trend & Impulse Filter This indicator combines Triple EMA momentum, RSI-style normalization, slope confirmation, and ATR-based impulse filtering to pro",
       "why_relevant": "Automated crawler found keyword evidence for repainting_or_lookahead.",
       "usable_in_report": "yes",
-      "strength_score": "38"
+      "strength_score": "38",
+      "evidence_strength": "Weak",
+      "evidence_role": "Demand proxy"
     },
     {
       "evidence_origin": "crawler",
@@ -9160,7 +9179,9 @@
       "short_evidence": "two date windows side by side, each showing average R and trade count per side, plus an automatic verdict. 3. The entry signal \u2014 how it is calculated 3.1 The breakout channel The rails are the highest high and lowest low of the last N bars (default 20), measured up to the previous bar so they never repaint: upBreak = highest(high, 20) of the prior ",
       "why_relevant": "Automated crawler found keyword evidence for backtest_realism.",
       "usable_in_report": "yes",
-      "strength_score": "245"
+      "strength_score": "245",
+      "evidence_strength": "Weak",
+      "evidence_role": "Demand proxy"
     },
     {
       "evidence_origin": "crawler",
@@ -9170,7 +9191,9 @@
       "short_evidence": "n Auto-Reversal: Opposite signals automatically close and reverse positions Webhook Ready: Six distinct alert messages for automation (Entry Buy/Sell, Close Long/Short, SL Hit Long/Short) Performance Metrics NIFTY Futures (15min): 50%+ win rate with ADX filter OFF Crypto Markets: Requires extensive backtesting before live deployment Optimal Timefra",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "260"
+      "strength_score": "260",
+      "evidence_strength": "Weak",
+      "evidence_role": "Demand proxy"
     },
     {
       "evidence_origin": "crawler",
@@ -9180,7 +9203,9 @@
       "short_evidence": " structureAverage ) 4. Multi-Layer Cloud The cloud is built from ATR-adjusted bands around the adaptive structure average. Inner, middle, and outer layers give a visual read of compression, transition, and extended distance from structure. 5. Strength-Based Candle Coloring When enabled, candles are repainted with a gradient based on distance from t",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "272"
+      "strength_score": "272",
+      "evidence_strength": "Weak",
+      "evidence_role": "Demand proxy"
     },
     {
       "evidence_origin": "crawler",
@@ -9190,7 +9215,9 @@
       "short_evidence": "d-bars toggle governs what the script computes. In Live mode the centerline, momentum, bands and signals update intrabar on the developing bar for the fastest response, with the current bar able to change until it closes. In Confirmed mode everything is locked to closed bars only, so signals do not repaint and print on the bar that closes the move.",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "119"
+      "strength_score": "119",
+      "evidence_strength": "Weak",
+      "evidence_role": "Demand proxy"
     },
     {
       "evidence_origin": "crawler",
@@ -9200,7 +9227,9 @@
       "short_evidence": "Build, Test & Deploy Pine Script Most \u201cstrategy builders\u201d focus on writing code \u2014 not on proving the strategy is robust. Here\u2019s a better workflow. Get Build Alpha Watch Demo Definition What Is a TradingView Strategy Generator? Any tool or workflow that helps you define rule-based entries and exits, backtest on historical data, optimize parameters, ",
       "why_relevant": "Automated crawler found keyword evidence for no_code_or_template_need.",
       "usable_in_report": "yes",
-      "strength_score": "28"
+      "strength_score": "28",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "crawler",
@@ -9210,7 +9239,9 @@
       "short_evidence": "Trading Strategy Backtesting Software | TrendSpider Skip to Main Content Products Tools Solutions Resources (833) 587-3637 Login Sign up now Premium Market Research & Trading Platform Hundreds of institutional-grade capabilities that elevate every part of your trading workflow. Platform overview Contact Sales Plans & Pricing Explore the platform An",
       "why_relevant": "Automated crawler found keyword evidence for backtest_realism.",
       "usable_in_report": "yes",
-      "strength_score": "50"
+      "strength_score": "50",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "crawler",
@@ -9220,7 +9251,9 @@
       "short_evidence": "WebhookTrade - TradingView Alerts to MetaTrader (MT4/MT5) Trading Automation Without Coding Easily connect TradingView with MetaTrader or API Brokers to transform your alerts into automated orders. Set everything up in under 5 minutes. Start for Free See How It Works Execute Your Strategies Instantly in 3 Steps 1 1. Create Account/API Key Create yo",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "21"
+      "strength_score": "21",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "crawler",
@@ -9230,7 +9263,9 @@
       "short_evidence": "Homepage - QuantPedia Quantpedia - The Encyclopedia of Algorithmic and Quantitative Trading Strategies Turn Academic Research Into Your Trading Advantage Save your time We\u2019ve already read hundreds of thousands of financial research papers Get trading ideas We've identified more than 1000 attractive trading systems together with hundreds of related ",
       "why_relevant": "Automated crawler found keyword evidence for paid_indicator_trust.",
       "usable_in_report": "maybe",
-      "strength_score": "3"
+      "strength_score": "3",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "crawler",
@@ -9240,7 +9275,9 @@
       "short_evidence": "tors Custom Indicators Whether you need a proprietary signal system, a multi-timeframe confluence tool, or a completely unique visual overlay, we translate your concept into clean, optimised Pine Script v6 code. Every indicator is built with performance in mind \u00e2\u0080\u0094 no unnecessary recalculations, no repainting issues, and full compatibility with Tra",
       "why_relevant": "Automated crawler found keyword evidence for alert_or_webhook_workflow.",
       "usable_in_report": "yes",
-      "strength_score": "29"
+      "strength_score": "29",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "manual",
@@ -9250,7 +9287,9 @@
       "short_evidence": "TradingView documentation explains repainting as a case where historical and realtime calculations or plots behave differently.",
       "why_relevant": "Supports the claim that repainting is an official platform-level technical issue rather than an invented pain point",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "manual",
@@ -9260,7 +9299,9 @@
       "short_evidence": "TradingView documentation explains that alerts can send HTTP POST requests to a configured webhook URL.",
       "why_relevant": "Supports PineGuard's webhook-based alert collection and forward-test monitoring design",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "manual",
@@ -9270,7 +9311,9 @@
       "short_evidence": "TradingView explains that repainting occurs when historical and realtime calculations or plots behave differently.",
       "why_relevant": "Shows that historical/live mismatch is an official Pine Script reliability issue",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "manual",
@@ -9280,7 +9323,9 @@
       "short_evidence": "TradingView documents request.security and higher-timeframe data behavior that can create misleading historical signals if used incorrectly.",
       "why_relevant": "Supports PineGuard's need to flag lookahead and higher-timeframe reliability risks",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "manual",
@@ -9290,7 +9335,9 @@
       "short_evidence": "TradingView strategy documentation discusses broker-emulator behavior orders commissions slippage and strategy-testing assumptions.",
       "why_relevant": "Supports the claim that backtest realism depends on execution assumptions rather than raw chart signals alone",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "manual",
@@ -9300,7 +9347,9 @@
       "short_evidence": "TradingView supports webhook alerts that send HTTP POST requests to external URLs when alerts fire.",
       "why_relevant": "Supports PineGuard's webhook-based alert logging and forward-test monitor",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "manual",
@@ -9310,7 +9359,9 @@
       "short_evidence": "TradingView documents alerts as a core workflow for notifying users when chart conditions are met.",
       "why_relevant": "Shows that alert events are a native data stream PineGuard can collect and analyze",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Strong",
+      "evidence_role": "Technical validity evidence"
     },
     {
       "evidence_origin": "manual",
@@ -9320,7 +9371,9 @@
       "short_evidence": "TradingView public script listings use non-repaint language as a visible selling point for indicators and strategies.",
       "why_relevant": "Shows that non-repainting is part of marketplace demand language rather than only a technical documentation issue",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Demand proxy"
     },
     {
       "evidence_origin": "manual",
@@ -9330,7 +9383,9 @@
       "short_evidence": "TradingView public script listings include backtest-related strategies and descriptions.",
       "why_relevant": "Shows that backtesting language appears in the public strategy marketplace",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Demand proxy"
     },
     {
       "evidence_origin": "manual",
@@ -9340,7 +9395,9 @@
       "short_evidence": "TradingView public script listings include webhook-related scripts and automation-oriented descriptions.",
       "why_relevant": "Supports the claim that webhook workflows are visible in the TradingView ecosystem",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Demand proxy"
     },
     {
       "evidence_origin": "manual",
@@ -9350,7 +9407,9 @@
       "short_evidence": "Pineify positions itself as a no-code or AI-assisted Pine Script workflow for building indicators and strategies.",
       "why_relevant": "Supports a willingness-to-pay proxy for lower-friction Pine strategy creation tools",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "manual",
@@ -9360,7 +9419,9 @@
       "short_evidence": "Build Alpha offers a TradingView strategy generator that turns strategy ideas into Pine Script workflows.",
       "why_relevant": "Supports the existence of adjacent strategy-generation products around TradingView",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "manual",
@@ -9370,7 +9431,9 @@
       "short_evidence": "TrendSpider markets strategy development and backtesting tools as a product feature.",
       "why_relevant": "Supports willingness-to-pay for structured strategy testing beyond manual chart inspection",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "manual",
@@ -9380,7 +9443,9 @@
       "short_evidence": "TradersPost provides a TradingView signal workflow that connects alerts to external automation.",
       "why_relevant": "Shows that TradingView alerts already support paid downstream workflow products",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "manual",
@@ -9390,7 +9455,9 @@
       "short_evidence": "PineConnector markets TradingView-to-MetaTrader automation based on alerts and connectors.",
       "why_relevant": "Supports the claim that alert automation is commercially relevant",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "manual",
@@ -9400,7 +9467,9 @@
       "short_evidence": "WebhookTrade markets webhook-based automation for TradingView alerts and trading workflows.",
       "why_relevant": "Provides adjacent-product evidence for monetizing TradingView webhook data flows",
       "usable_in_report": "yes",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "manual",
@@ -9410,7 +9479,9 @@
       "short_evidence": "BotJockie offers trading-system-related services that include development and review-like support.",
       "why_relevant": "Supports a weak but relevant proxy that users may pay for external strategy expertise or validation",
       "usable_in_report": "maybe",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     },
     {
       "evidence_origin": "manual",
@@ -9420,7 +9491,9 @@
       "short_evidence": "Quantpedia organizes research-based trading strategy ideas and performance evidence.",
       "why_relevant": "Supports the idea that research-inspired strategy templates can be packaged as a data product",
       "usable_in_report": "maybe",
-      "strength_score": "manual"
+      "strength_score": "manual",
+      "evidence_strength": "Medium",
+      "evidence_role": "Adjacent-market benchmark"
     }
   ],
   "evidenceCategory": [
@@ -9469,6 +9542,57 @@
     {
       "name": "pricing",
       "value": 1
+    }
+  ],
+  "evidenceStrength": [
+    {
+      "name": "Medium",
+      "value": 17
+    },
+    {
+      "name": "Strong",
+      "value": 14
+    },
+    {
+      "name": "Weak",
+      "value": 5
+    }
+  ],
+  "graderTour": [
+    {
+      "step": "1",
+      "route": "#/home",
+      "what_to_check": "Landing page states the beachhead customer and product output."
+    },
+    {
+      "step": "2",
+      "route": "#/health-check",
+      "what_to_check": "Five-step wizard: persona, strategy, available data, risks, generation."
+    },
+    {
+      "step": "3",
+      "route": "#/diagnosis",
+      "what_to_check": "Health score, category breakdown, and missing workflow components."
+    },
+    {
+      "step": "4",
+      "route": "#/monitor",
+      "what_to_check": "Forward-test monitor, horizon buttons, sample CSV download, payload copy."
+    },
+    {
+      "step": "5",
+      "route": "#/evidence",
+      "what_to_check": "Evidence Explorer filters by category, source, and strength."
+    },
+    {
+      "step": "6",
+      "route": "#/report",
+      "what_to_check": "Downloadable report as the paid data product output."
+    },
+    {
+      "step": "7",
+      "route": "#/architecture",
+      "what_to_check": "Static course deployment and production event-driven pipeline."
     }
   ],
   "featureMap": [

@@ -34,6 +34,33 @@ def count_by(df, col):
         return []
     return [{"name": str(k), "value": int(v)} for k, v in df[col].fillna("unknown").value_counts().items()]
 
+def assign_evidence_strength(row):
+    source_type = str(row.get("source_type", ""))
+    origin = str(row.get("evidence_origin", ""))
+    if source_type == "official_doc":
+        return "Strong"
+    if source_type in {"pricing", "competitor", "competitor_or_service"}:
+        return "Medium"
+    if origin == "manual":
+        return "Medium"
+    return "Weak"
+
+def assign_evidence_role(row):
+    source_type = str(row.get("source_type", ""))
+    if source_type == "official_doc":
+        return "Technical validity evidence"
+    if source_type == "pricing":
+        return "WTP benchmark evidence"
+    if source_type.startswith("competitor"):
+        return "Adjacent-market benchmark"
+    if source_type == "marketplace_listing":
+        return "Demand proxy"
+    return "Qualitative public-trace evidence"
+
+if not evidence.empty:
+    evidence["evidence_strength"] = evidence.apply(assign_evidence_strength, axis=1)
+    evidence["evidence_role"] = evidence.apply(assign_evidence_role, axis=1)
+
 validation = [
     {"check":"templates_present","passed":len(templates)>=5,"detail":f"{len(templates)} templates"},
     {"check":"prices_present","passed":len(prices)>=100,"detail":f"{len(prices)} price rows"},
@@ -78,7 +105,8 @@ payload = {
     "meta": {
         "project":"PineGuard",
         "student_id":"r12323059",
-        "version":"GitHub Pages Static Prototype v2",
+        "version":"GitHub Pages Static SPA v3 high-score polish",
+        "routes":"home, health-check, diagnosis, strategy-profile, monitor, evidence, report, pricing, architecture, risk, docs, tour",
         "build_type":"static browser app",
         "data_mode":"pre-downloaded JSON/CSV snapshots",
         "runtime_note":"No Python backend is required after deployment."
@@ -89,6 +117,16 @@ payload = {
     "evidence": records(evidence),
     "evidenceCategory": count_by(evidence, "pain_category"),
     "evidenceSource": count_by(evidence, "source_type"),
+    "evidenceStrength": count_by(evidence, "evidence_strength"),
+    "graderTour": [
+        {"step":"1","route":"#/home","what_to_check":"Landing page states the beachhead customer and product output."},
+        {"step":"2","route":"#/health-check","what_to_check":"Five-step wizard: persona, strategy, available data, risks, generation."},
+        {"step":"3","route":"#/diagnosis","what_to_check":"Health score, category breakdown, and missing workflow components."},
+        {"step":"4","route":"#/monitor","what_to_check":"Forward-test monitor, horizon buttons, sample CSV download, payload copy."},
+        {"step":"5","route":"#/evidence","what_to_check":"Evidence Explorer filters by category, source, and strength."},
+        {"step":"6","route":"#/report","what_to_check":"Downloadable report as the paid data product output."},
+        {"step":"7","route":"#/architecture","what_to_check":"Static course deployment and production event-driven pipeline."},
+    ],
     "featureMap": [
         {"pain_category":"alert_or_webhook_workflow","product_feature":"Webhook alert monitor","paid_output":"Monthly Forward-Test Monitor"},
         {"pain_category":"repainting_or_lookahead","product_feature":"Repaint/lookahead checklist","paid_output":"Strategy Health Check"},
@@ -115,4 +153,5 @@ pd.DataFrame(production_layers).to_csv(DATA / "production_architecture_layers.cs
 pd.DataFrame(risk_controls).to_csv(DATA / "risk_controls.csv", index=False)
 pd.DataFrame(evidence_quality).to_csv(DATA / "evidence_quality_notes.csv", index=False)
 pd.DataFrame(scale_economics).to_csv(DATA / "scale_economics.csv", index=False)
+pd.DataFrame(count_by(evidence, "evidence_strength")).to_csv(DATA / "evidence_strength_summary.csv", index=False)
 print("Built static site data under docs/data")
