@@ -67,7 +67,7 @@
 \vspace{0.28cm}
 {\sffamily\bfseries\color{white}\fontsize{15.5}{20}\selectfont TradingView Strategy Workflow Trust Layer}\par
 \vspace{0.12cm}
-{\sffamily\bfseries\color{white}\fontsize{13.2}{18}\selectfont Monetizing auditable workflow validation, not trading alpha}\par
+{\sffamily\bfseries\color{white}\fontsize{13.2}{18}\selectfont Monetizing TradingView strategy workflow validation}\par
 \vspace{0.85cm}
 {\sffamily\color{Green}\large Student ID: r12323059}\par
 {\sffamily\color{white}\large GitHub Repository: \RepoURL}\par
@@ -172,24 +172,40 @@ Marketplace listings & Non-repaint, webhook, and backtest language appears in pu
 \caption{Evidence rows by pain category in the static evidence snapshot.}
 \end{figure}
 
+\begin{table}[H]
+\centering
+\caption{Evidence role by strength label in the current snapshot}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.2cm}>{\centering\arraybackslash}p{1.8cm}>{\centering\arraybackslash}p{1.8cm}>{\centering\arraybackslash}p{1.8cm}X}
+\toprule
+\textbf{Evidence role} & \textbf{Strong} & \textbf{Medium} & \textbf{Weak} & \textbf{Interpretation} \\
+\midrule
+Technical validity evidence & 14 & 0 & 0 & Platform mechanics and validation failure modes are directly documented. \\
+Adjacent-market benchmark & 0 & 13 & 0 & Pricing and product benchmarks support adjacent willingness-to-pay, not direct demand. \\
+Demand proxy & 0 & 3 & 5 & Public pain signals are directional and non-representative. \\
+WTP benchmark evidence & 0 & 1 & 0 & One row directly supports pricing logic, but it is still not a conversion test. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 The strongest technical evidence concerns repainting, backtest realism, and webhook/alert workflows. TradingView documentation discusses repainting as historical-versus-realtime behavior differences\src{1}, strategy testing assumptions such as order behavior, commission, and slippage\src{2}, and webhook alert delivery through HTTP POST requests\src{3}. These sources do not prove willingness to pay, but they establish that PineGuard addresses real workflow properties rather than invented concerns.
 
 \subsection{Willingness to pay}
 
-PineGuard's price corridor is benchmarked from adjacent products rather than a direct customer survey. This is an adjacent willingness-to-pay benchmark, not direct proof of PineGuard demand. Users already pay for no-code Pine tooling, webhook automation, strategy testing, and trading workflow platforms. PineGuard should price below execution-routing tools because it does not replace broker execution.
+PineGuard's price corridor is benchmarked from adjacent products rather than a direct customer survey. This is an adjacent willingness-to-pay benchmark, not direct proof of PineGuard demand. Users already pay for TradingView, webhook automation, trading journals, and strategy-testing platforms. PineGuard should price below execution-routing tools because it validates rather than routes orders.
 
 \begin{table}[H]
 \centering
 \caption{Adjacent-product benchmarks and PineGuard interpretation}
 \scriptsize
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{3.0cm}X}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.55cm}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{3.25cm}X}
 \toprule
-\textbf{Category} & \textbf{Examples} & \textbf{Public benchmark} & \textbf{Interpretation} \\
+\textbf{Category} & \textbf{Examples} & \textbf{Public benchmark source} & \textbf{Interpretation} \\
 \midrule
-No-code Pine tooling & Pineify; PineGen AI & USD 99 lifetime or USD 39-99/month. & Users pay to reduce implementation friction. \\
-Webhook automation & TradersPost; PineConnector; PickMyTrade; CrossTrade & Tens to hundreds of USD/month. & Users pay for alert infrastructure and workflow reliability. \\
-Backtesting and research & TrendSpider; Quantpedia; Build Alpha & Premium subscriptions or paid research access. & Users pay for strategy evaluation and research. \\
-Trading workflow platform & TradingView paid plans & Paid features tied to alerts, indicators, history, and workflow capacity. & The target segment already pays for trading tools. \\
+Trading workflow platform & TradingView paid plans\src{4} & Paid plans tied to alerts, indicators, history, and workflow capacity. & The target segment already pays for trading tools. \\
+Webhook automation & TradersPost; PickMyTrade; CrossTrade\src{11,12,13} & Public pricing and comparison pages show monthly alert-routing infrastructure products. & PineGuard should price below execution-routing tools because it validates rather than routes orders. \\
+Trading journals and analytics & TradeZella; Edgewonk; TraderSync\src{14,15} & Trading journals monetize structured post-trade analytics and reports. & Supports one-time reports and monthly monitoring around strategy workflows. \\
+Backtesting and research & TrendSpider; QuantConnect\src{16,17} & Research and backtesting platforms use premium subscriptions or paid platform access. & Supports paid strategy-evaluation products, but remains an adjacent benchmark. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -211,6 +227,27 @@ Alert-event logs & Join alert timestamp, direction, symbol, and future price sna
 Strategy metadata & Check missing cost assumptions, exits, versioning, repaint review, and payload schema. & Health score and gap diagnosis. \\
 Public evidence rows & Label source type, pain category, evidence role, and evidence strength. & Evidence Explorer and report basis. \\
 User profile & Match style, market, risk tolerance, and concerns to validation templates. & Recommended next validation modules. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Health-score rationale}
+
+The score is intentionally a workflow-completeness score. It makes no profitability claim. The weights are fixed and auditable so users can see why a report changes when a missing workflow component is added.
+
+\begin{table}[H]
+\centering
+\caption{Health-score weights used in the browser-side scoring logic}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\centering\arraybackslash}p{1.6cm}X}
+\toprule
+\textbf{Category} & \textbf{Max} & \textbf{Reason for weight} \\
+\midrule
+Backtest realism & 25 & Strategy Tester evidence is fragile when cost, slippage, and execution assumptions are missing. \\
+Live alert observability & 20 & TradingView alerts become valuable data only when alert history and payload schema are captured. \\
+Repainting/lookahead review & 20 & Multi-timeframe and realtime/historical differences are TradingView-specific failure modes. \\
+Risk-rule completeness & 20 & A workflow is incomplete without exit logic and position-sizing assumptions. \\
+Evidence quality & 15 & Forward-test records and version history make the report auditable. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -240,6 +277,22 @@ The deployed system is a static GitHub Pages application. It uses pre-built CSV/
 \end{tabularx}
 \end{table}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[every node/.style={font=\sffamily\small}]
+\tikzstyle{screen}=[draw=Border,fill=Light,rounded corners=2mm,minimum width=4.2cm,minimum height=1.95cm,align=left,text width=3.75cm]
+\node[screen] (a) {\textbf{Health Check}\\ Persona, data, risk concerns};
+\node[screen,right=.55cm of a] (b) {\textbf{Diagnosis}\\ Score weights and missing workflow gaps};
+\node[screen,below=.45cm of a] (c) {\textbf{Evidence Explorer}\\ Strength, role, and source filters};
+\node[screen,right=.55cm of c] (d) {\textbf{Report}\\ Report ID, evidence basis, next step};
+\draw[-{Stealth[length=2mm]},thick,Green] (a)--(b);
+\draw[-{Stealth[length=2mm]},thick,Green] (b)--(d);
+\draw[-{Stealth[length=2mm]},thick,Green] (a)--(c);
+\draw[-{Stealth[length=2mm]},thick,Green] (c)--(d);
+\end{tikzpicture}
+\caption{Deployed-route montage. The live site exposes a grader path from health-check input to diagnosis, evidence review, and downloadable report.}
+\end{figure}
+
 \subsection{Production architecture}
 
 \begin{figure}[H]
@@ -264,6 +317,23 @@ The deployed system is a static GitHub Pages application. It uses pre-built CSV/
 \end{figure}
 
 The production version would acknowledge webhooks quickly, enqueue raw payloads, validate idempotency, store raw events and report metadata, recompute reports on a schedule, and expose a dashboard/API/report layer. If privacy-preserving local analytics becomes important, the design can add DuckDB-Wasm or a similar browser-side analytical layer so that heavy report queries run near the user rather than in a central warehouse. At 10x scale, the main additions are a queue, relational metadata store, and daily workers. At 100x scale, the system needs partitioned event tables, object storage retention policy, retry monitoring, and cost-aware pricing for high-frequency users.
+
+\begin{table}[H]
+\centering
+\caption{Production webhook event contract}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.0cm}X}
+\toprule
+\textbf{Field} & \textbf{Purpose} \\
+\midrule
+\texttt{event\_id} and \texttt{payload\_hash} & Idempotency and duplicate-event control. \\
+\texttt{user\_id}, \texttt{strategy\_id} & User-authorized partitioning and report grouping. \\
+\texttt{symbol}, \texttt{timeframe}, \texttt{signal} & Normalized strategy-event metadata. \\
+\texttt{alert\_time}, \texttt{alert\_price} & Forward-test attribution anchor. \\
+\texttt{payload\_version}, \texttt{raw\_payload\_uri} & Schema evolution and raw audit trail. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \section{Implementation and Reproducibility}
 
@@ -342,6 +412,16 @@ PineGuard satisfies the assignment goal by connecting technical data processing 
 \item Stripe. \emph{Idempotent Requests}. \url{https://docs.stripe.com/api/idempotent_requests}. Accessed: 19 June 2026.
 \item DuckDB. \emph{DuckDB-Wasm: Efficient Analytical SQL in the Browser}. \url{https://duckdb.org/2021/10/29/duckdb-wasm}. Accessed: 19 June 2026.
 \item TradingView. \emph{Terms of Use, Policies and Disclaimers}. \url{https://www.tradingview.com/policies/}. Accessed: 19 June 2026.
+\item TradersPost. \emph{Automated Trading Bot Platform Pricing}. \url{https://traderspost.io/pricing}. Accessed: 19 June 2026.
+\item PickMyTrade. \emph{Automated Trading FAQ}. \url{https://pickmytrade.io/general-faq}. Accessed: 19 June 2026.
+\item Hootsuite Engineering. \emph{A Scalable, Reliable Webhook Dispatcher Powered by Kafka}. \url{https://medium.com/hootsuite-engineering/a-scalable-reliable-webhook-dispatcher-powered-by-kafka-2dc3d677f16b}. Accessed: 19 June 2026.
+\item TradeZella. \emph{Pricing}. \url{https://www.tradezella.com/pricing}. Accessed: 19 June 2026.
+\item TradeZella. \emph{TradeZella vs Edgewonk and TraderSync Comparisons}. \url{https://www.tradezella.com/vs/edgewonk}. Accessed: 19 June 2026.
+\item TrendSpider. \emph{Trading Platform and Strategy Tools}. \url{https://trendspider.com/}. Accessed: 19 June 2026.
+\item QuantConnect. \emph{Pricing}. \url{https://www.quantconnect.com/pricing}. Accessed: 19 June 2026.
+\item Stack Overflow. \emph{Pine Script V5: How to Consider Spread and Commission in Backtesting}. \url{https://stackoverflow.com/questions/75297856/pine-script-v5-how-to-consider-the-spread-and-commission-in-backtesting}. Accessed: 19 June 2026.
+\item TradingView. \emph{Script Publishing Rules}. \url{https://www.tradingview.com/support/solutions/43000590599-script-publishing-rules/}. Accessed: 19 June 2026.
+\item TradingView. \emph{House Rules and Publishing Guide}. \url{https://www.tradingview.com/house-rules/}. Accessed: 19 June 2026.
 \end{enumerate}}
 
 \end{document}

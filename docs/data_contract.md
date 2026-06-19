@@ -1,63 +1,25 @@
-# PineGuard Data Contract
+# Data Contract
 
-This document describes the minimum fields needed by the deployed static application.
+This document defines the minimum runtime data contract for the static demo and the production event contract for a live version.
 
-## `pineguard_static_data.json`
+## Static runtime bundle
 
-Required top-level keys:
+The deployed SPA loads `docs/data/pineguard_static_data.json`. Required top-level keys:
 
 - `templates`
 - `prices`
 - `alerts`
 - `evidence`
-- `evidenceCategory`
-- `evidenceSource`
 - `evidenceStrength`
 - `featureMap`
 - `validation`
-- `competitorBenchmarks`
 - `productionLayers`
 - `riskControls`
-- `evidenceQuality`
-- `scaleEconomics`
 - `graderTour`
 
-## Strategy templates
+## Evidence row contract
 
-Required fields:
-
-- `template_id`
-- `name`
-- `style`
-- `market`
-- `risk_level`
-- `description`
-- `revenue_angle`
-
-## Alert events
-
-Required fields:
-
-- `timestamp`
-- `symbol`
-- `signal`
-- `price`
-
-The static prototype supports `BUY` and `SELL` signal directions. Production would add idempotency keys, raw payload hashes, user IDs, and strategy version IDs.
-
-## Market prices
-
-Required fields:
-
-- `timestamp`
-- `symbol`
-- `close`
-
-The browser joins alert timestamps to later price snapshots to compute directional forward-test outcomes.
-
-## Evidence rows
-
-Required fields:
+Each evidence row must include:
 
 - `url`
 - `source_type`
@@ -67,17 +29,40 @@ Required fields:
 - `evidence_strength`
 - `evidence_role`
 
-Evidence strength should be interpreted conservatively:
+## Alert event contract
 
-- `Strong`: official technical documentation or primary platform source.
-- `Medium`: competitor pricing, adjacent-product benchmark, or manually coded public evidence.
-- `Weak`: marketplace listing or broad demand proxy.
+Each static alert event must include:
 
-## Validation
+- `timestamp`
+- `symbol`
+- `signal`
+- `price`
+- `strategy_id`
 
-Run:
+## Production webhook event schema
 
-```bash
-python scripts/validate_static_site.py
-node scripts/frontend_smoke_test.js
+A production event should be normalized into a schema like this:
+
+```json
+{
+  "event_id": "uuid",
+  "payload_hash": "sha256",
+  "user_id": "hashed_user_id",
+  "strategy_id": "strategy_id",
+  "symbol": "AAPL",
+  "timeframe": "15m",
+  "signal": "long_entry",
+  "alert_time": "2026-06-19T13:20:00Z",
+  "alert_price": 198.25,
+  "payload_version": "v1",
+  "raw_payload_uri": "object://bucket/path/event.json"
+}
 ```
+
+## Production reliability notes
+
+- `event_id` and `payload_hash` support idempotency.
+- Raw payloads should be stored separately from normalized metadata.
+- Webhook ingestion should acknowledge quickly and move durable processing to a queue.
+- Scheduled workers compute forward-test outcomes after the chosen horizon has passed.
+- Sensitive user strategy data should be minimized and separated from public evidence data.

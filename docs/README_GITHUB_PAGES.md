@@ -1,103 +1,40 @@
-# PineGuard: Static Strategy Validation Product
+# PineGuard
 
-PineGuard is a static GitHub Pages prototype for a data monetization system around TradingView-style strategy workflows. The product does not sell trading signals or promise profitable strategies. It monetizes the validation layer: user preference data, alert-event logs, market-price snapshots, strategy templates, demand-evidence tables, forward-test outcomes, and downloadable strategy health reports.
+PineGuard is a deployed GitHub Pages product demo for monetizing TradingView strategy-workflow validation. It is not a trading-signal seller and it does not execute trades. The product converts TradingView-style alert events, strategy metadata, validation assumptions, forward-test outcomes, and public evidence labels into a Strategy Health Report.
 
-Student ID: `r12323059`
+- Official repository: https://github.com/r12922076/bda_final
+- Live demo: https://r12922076.github.io/bda_final/
+- Main grader route: `#/tour`
+- Final report: `report/r12323059.pdf`
 
-Repository: https://github.com/r12922076/bda_final
+## What PineGuard is
 
-Live demo: https://r12922076.github.io/bda_final/
-
-## Target customer
-
-The initial target customer is a paid TradingView power user who uses Pine Script strategies, Strategy Tester, alerts, webhook-style automation, public indicators, or paid scripts, but lacks a structured way to validate whether those strategy workflows are complete, credible, and monitorable after deployment.
-
-The strongest beachhead segment is the alert-heavy user. This segment already produces event data, so PineGuard can create value by logging alert events, attributing forward-test outcomes, and generating a strategy health report.
-
-## What the website demonstrates
-
-The static website demonstrates four product mechanisms:
-
-1. **Template recommendation**: user style and risk preferences are mapped to strategy-completion templates.
-2. **Workflow gap diagnosis**: the system checks whether the workflow contains alert logging, forward-test records, cost assumptions, repaint/lookahead checks, exit rules, and versioning.
-3. **Forward-test attribution**: alert-event prices are compared with later market prices over a selected horizon.
-4. **Evidence dashboard and report generation**: public demand evidence is summarized by pain category and source type, then converted into a report-style product output.
-
-## Static architecture
-
-GitHub Pages hosts only static files, so PineGuard uses a build-time data snapshot and browser-side processing.
+PineGuard is a validation and trust layer between TradingView strategy development and any later manual or automated execution workflow.
 
 ```text
-Build-time data collection
-        ↓
-CSV snapshots under docs/data/
-        ↓
-Combined JSON file: docs/data/pineguard_static_data.json
-        ↓
-Browser-side JavaScript analytics
-        ↓
-Dashboard, evidence charts, report preview, and data downloads
+TradingView strategy development
+        -> PineGuard validation layer
+        -> execution bridge or manual decision
 ```
 
-At runtime, the deployed website does not require a private server, database, API key, or user login. All runtime inputs are versioned static files.
+The initial beachhead is the alert-heavy paid TradingView user. This user already creates alert-event data, already pays for trading workflow tools, and lacks a structured way to judge whether a strategy workflow is complete enough to evaluate.
 
-## Repository structure
+## Live demo routes
 
-```text
-docs/index.html                       Static product website
-docs/assets/style.css                 Product styling and responsive layout
-docs/assets/app.js                    Browser-side recommendation, diagnosis, forward-test, and report logic
-docs/data/pineguard_static_data.json  Combined static data snapshot
-docs/data/*.csv                       Downloadable data snapshots
-docs/architecture.md                 System architecture overview
-docs/data_acquisition.md             Demand-evidence acquisition process
-docs/data_dictionary.md              Static data schema and field definitions
-docs/privacy_and_ethics.md           Privacy, ethics, and platform-risk notes
-docs/rubric_mapping.md               Mapping between repository files and grading criteria
-scripts/build_static_site.py          Rebuilds the static JSON and CSV files
-.github/workflows/pages.yml           Optional GitHub Pages deployment workflow
-README.md                             Project overview and deployment instructions
-```
+- `#/tour`: two-minute grader quick tour.
+- `#/home`: product positioning and initial wedge.
+- `#/health-check`: five-step strategy health-check wizard.
+- `#/diagnosis`: score breakdown, missing workflow components, and score-rule rationale.
+- `#/strategy-profile`: strategy-completion template library.
+- `#/monitor`: static forward-test monitor, CSV parsing demo, and webhook payload sample.
+- `#/evidence`: filterable evidence explorer with strength and role labels.
+- `#/report`: downloadable Strategy Health Report.
+- `#/pricing`: pricing packages and adjacent WTP benchmark logic.
+- `#/architecture`: static prototype and production event-driven architecture.
+- `#/risk`: go-to-market, legal, privacy, and platform-risk controls.
+- `#/docs`: documentation hub and static data downloads.
 
-## Data acquisition process
-
-The prototype uses public digital-trace evidence and pre-built static data snapshots.
-
-The evidence dataset was built from:
-
-- official TradingView documentation pages,
-- public TradingView script/listing pages,
-- competitor or adjacent-product pages,
-- pricing or subscription-plan pages,
-- manually coded public evidence rows.
-
-The data-acquisition logic is intentionally conservative. It avoids private pages, paywalled material, login-only content, and long copyrighted excerpts. Evidence rows use short paraphrases and source URLs so the process remains auditable.
-
-
-## Grading-oriented documentation
-
-The repository includes additional documentation to make the project easier to evaluate:
-
-- `docs/architecture.md`: system architecture and production-scale extension.
-- `docs/data_acquisition.md`: how the public evidence and static snapshots were prepared.
-- `docs/data_dictionary.md`: field definitions for all static data files.
-- `docs/privacy_and_ethics.md`: investment-advice, privacy, and platform-risk controls.
-- `docs/rubric_mapping.md`: where each final-project requirement is addressed.
-
-## Runtime data files
-
-The website reads the following files from `docs/data/`:
-
-- `pineguard_static_data.json`: combined runtime dataset,
-- `market_prices_snapshot.csv`: pre-built market-price snapshot,
-- `alert_events_snapshot.csv`: TradingView-style alert-event snapshot,
-- `strategy_templates.csv`: strategy-completion template library,
-- `combined_evidence_snapshot.csv`: public demand-evidence snapshot,
-- `static_validation.csv`: build-time validation checks.
-
-These files are intentionally downloadable from the website to make the data product transparent and reproducible.
-
-## Local preview
+## Run locally
 
 Run the site through a local HTTP server:
 
@@ -105,23 +42,90 @@ Run the site through a local HTTP server:
 python -m http.server 8000 -d docs
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:8000
 ```
 
-Do not double-click `docs/index.html` directly. Some browsers block local JSON loading when a file is opened from the filesystem.
+Do not double-click `docs/index.html`, because browsers may block local JSON loading from the filesystem.
+
+## Validate the artifact
+
+```bash
+python scripts/validate_static_site.py
+node scripts/frontend_smoke_test.js
+```
+
+The validation checks required files, runtime JSON keys, evidence-strength fields, route registration, and frontend assets.
+
+## Data acquisition and evidence governance
+
+The project uses public digital-trace evidence rather than private interviews. It does not claim product-market fit. It supports a conservative beachhead hypothesis with four evidence classes:
+
+1. official technical documentation,
+2. public user-pain discussions and marketplace traces,
+3. competitor and adjacent-product pricing benchmarks,
+4. architecture, legal, and privacy references.
+
+The public evidence workflow is documented in:
+
+- `docs/data_acquisition.md`
+- `docs/evidence_governance.md`
+- `docs/data/evidence_seed_urls.csv`
+- `docs/data/combined_evidence_snapshot.csv`
+- `docs/data/evidence_strength_summary.csv`
+
+Evidence strength is interpreted conservatively:
+
+- Strong: official documentation, academic/professional validation references, or primary platform documents.
+- Medium: public discussions, professional articles, or adjacent-product benchmark pages.
+- Weak: isolated marketplace traces, promotional claims, or indirect demand proxies.
+
+## Static prototype versus production system
+
+The deployed GitHub Pages version is a static browser-side prototype. It uses pre-built CSV/JSON snapshots and client-side JavaScript analytics. It does not receive live TradingView webhooks, store private user strategy data, connect to brokers, or run a private backend.
+
+A production version would add:
+
+- user-authorized webhook ingestion,
+- schema validation and idempotency keys,
+- message queue buffering,
+- raw payload object storage,
+- relational metadata storage,
+- scheduled report recomputation,
+- dashboard/API/report delivery,
+- privacy controls for sensitive trading workflow data.
+
+## Repository structure
+
+```text
+docs/index.html                       Static SPA entry point
+docs/assets/*.js                      Browser-side routing, scoring, reports, and UI helpers
+docs/assets/style.css                 Product styling and responsive layout
+docs/data/*.csv                       Static evidence, alert, market, scoring, and seed datasets
+docs/data/pineguard_static_data.json  Runtime JSON bundle for the deployed SPA
+docs/grader_guide.md                  Recommended route path for evaluation
+docs/data_acquisition.md              Public-evidence acquisition process
+docs/evidence_governance.md           Evidence-strength labels and limitations
+docs/scoring_rules.md                 Health-score weights and interpretation
+docs/data_contract.md                 Runtime schema and production event contract
+docs/rubric_mapping.md                Mapping from final-project criteria to files/routes
+scripts/build_static_site.py          Rebuilds static JSON and derived CSV snapshots
+scripts/validate_static_site.py       Static file and data validation
+scripts/frontend_smoke_test.js        Dependency-free frontend smoke test
+report/r12323059.pdf                  Final PDF report
+```
 
 ## Rebuild static data
 
-If source CSVs are updated, rebuild the static data snapshot:
+If source CSV files are edited, rebuild the static runtime bundle:
 
 ```bash
 python scripts/build_static_site.py
 ```
 
-This regenerates `docs/data/pineguard_static_data.json` and the downloadable CSV snapshots.
+This regenerates `docs/data/pineguard_static_data.json` and derived static snapshots.
 
 ## Deploy to GitHub Pages
 
@@ -132,37 +136,8 @@ This regenerates `docs/data/pineguard_static_data.json` and the downloadable CSV
 5. Select folder `/docs`.
 6. Save.
 
-The site will be available at:
-
-```text
-https://r12922076.github.io/bda_final/
-```
-
-An optional GitHub Actions workflow is also provided in `.github/workflows/pages.yml`.
+An optional workflow is included in `.github/workflows/pages.yml`.
 
 ## Limitations
 
-This is an academic prototype. The deployed website uses static snapshots, so it does not collect new user data, receive live webhooks, or update market data after deployment. A production version would require user-authorized event ingestion, persistent storage, scheduled report recomputation, and a security model for private user strategy data.
-
-PineGuard is not investment advice, does not execute trades, and does not promise profitable strategies. It is a workflow validation and monitoring product. Its score measures workflow completeness and evidence quality, not trading profitability.
-
-## Production extension
-
-A production version would use:
-
-- a user-authorized webhook endpoint for alert ingestion,
-- a message queue for event buffering,
-- PostgreSQL for users, strategies, subscriptions, and reports,
-- object storage for raw webhook payloads and evidence snapshots,
-- time-series tables for prices and forward-test outcomes,
-- scheduled jobs for health-report recomputation,
-- near-real-time jobs for alert monitoring and anomaly detection.
-
-The static website is therefore the public demonstration layer, while the proposed production architecture is the scalable data-product layer.
-
-
-## Evidence governance added in the final refinement
-
-The final version separates direct technical evidence, adjacent willingness-to-pay benchmarks, public pain signals, and weaker demand proxies. Public-evidence personas are explicitly labeled as synthetic personas rather than interviews. The repository therefore supports a conservative claim: PineGuard has a defensible beachhead hypothesis, not proven product-market fit.
-
-The first beachhead remains alert-heavy paid TradingView users. Paid-script buyer analysis and Creator Trust Reports are treated as expansion paths, not the initial market wedge.
+PineGuard is an academic prototype and not investment advice. It does not recommend securities, promise profits, execute trades, or evaluate expected profitability. Its score measures workflow completeness and evidence quality. Demand evidence is public and directional; a real launch would still require direct interviews, landing-page conversion testing, and retention metrics.

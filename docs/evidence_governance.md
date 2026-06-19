@@ -1,27 +1,38 @@
-# Evidence Governance and Limitations
+# Evidence Governance
 
-PineGuard uses public evidence to support a defensible beachhead hypothesis, not to claim proven product-market fit.
+PineGuard separates evidence quality from product claims. The Evidence Explorer deliberately labels source type, pain category, evidence role, and evidence strength so the report does not overstate demand.
 
-## What the evidence can and cannot prove
+## Evidence-strength rules
 
-| Evidence type | What it supports | Strength | Limitation |
-|---|---|---|---|
-| TradingView official documentation | Alerts, webhooks, repainting, Strategy Tester assumptions, and Pine Script limitations are platform-level technical topics. | Strong technical evidence | Does not prove that users will pay for PineGuard. |
-| Academic or professional validation references | Backtest overfitting, lookahead bias, slippage, and transaction costs are recognized strategy-validation risks. | Strong to medium conceptual evidence | May not be specific to TradingView retail users. |
-| Public user discussions | Users report pain around backtest/live gaps, repainting, paid-script opacity, and alert tracking. | Medium qualitative evidence | Not representative; forum posts are self-selected and anecdotal. |
-| Competitor or adjacent-product pricing | Trading users already pay for charting, journaling, automation, research, and execution-routing tools. | Medium WTP benchmark | Indirect willingness-to-pay evidence; not a direct PineGuard demand curve. |
-| Marketplace listings | Non-repaint, webhook, backtest, paid-script, or strategy-template language appears in public product claims. | Weak to medium demand proxy | Marketplace language can be promotional and should not be treated as independent validation. |
+| Strength | Meaning | Examples |
+|---|---|---|
+| Strong | Primary technical, platform, academic, or policy source. | TradingView official docs, platform policies, academic/professional validation references. |
+| Medium | Public directional evidence or adjacent-market benchmark. | Reddit/forum pain signals, professional blogs, competitor-pricing pages. |
+| Weak | Isolated, promotional, or indirect evidence. | Marketplace listing language, single anecdote, indirect product claim. |
 
-## Conservative claim used in the report
+## Evidence-role rules
 
-The evidence supports a beachhead hypothesis: alert-heavy paid TradingView users already generate strategy-workflow data, face documented validation pain, and pay for adjacent workflow tools. It does not prove product-market fit. A production launch would still require direct interviews, landing-page conversion tests, and retention measurement.
+| Role | Interpretation |
+|---|---|
+| Technical validity evidence | The platform feature or failure mode is documented and technically real. |
+| Demand proxy | A public pain point or workaround suggests potential user need. |
+| WTP benchmark evidence | A direct or adjacent pricing source suggests users pay for nearby workflows. |
+| Adjacent-market benchmark | Similar tools monetize trading workflow, automation, journaling, or research. |
 
-## Evidence labels
+## Conservative interpretation
 
-- `Strong`: official documentation, platform terms, peer-reviewed or well-known academic references, or official pricing pages.
-- `Medium`: public user discussion, professional articles, competitor pages, or adjacent-product pages.
-- `Weak`: isolated anecdotes, marketplace copy, promotional pages, or indirect signals.
+The evidence supports a beachhead hypothesis, not product-market fit. PineGuard can claim that the target segment plausibly faces validation pain and pays for adjacent tools. It should not claim that conversion, retention, or a demand curve has already been proven.
 
-## Product implication
+## Current evidence mix
 
-PineGuard should avoid overstating its demand evidence. It should describe its first product as a low-risk validation artifact: a one-time Strategy Health Check and a lightweight Forward-Test Monitor for users who already create alert logs.
+- Official/technical sources support technical feasibility and platform constraints.
+- Public discussion sources support qualitative pain signals.
+- Competitor-pricing sources support indirect willingness-to-pay benchmarks.
+- Synthetic personas summarize public evidence. They are not direct interviews.
+
+## Files
+
+- `docs/data/evidence_seed_urls.csv`
+- `docs/data/combined_evidence_snapshot.csv`
+- `docs/data/evidence_strength_summary.csv`
+- `docs/data/pineguard_static_data.json`
