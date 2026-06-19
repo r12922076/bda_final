@@ -1,0 +1,5 @@
+check,passed,detail
+templates_present,True,7 templates
+prices_present,True,960 price rows
+alerts_present,True,36 alert rows
+evidence_present,True,36 evidence rows

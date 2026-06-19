@@ -1,0 +1,4 @@
+scale,expected_workload,architecture_implication,cost_driver
+Course prototype,Static snapshots and browser-side computation,"GitHub Pages, versioned JSON/CSV, and validation checks are sufficient.",Near-zero hosting cost for the academic demo.
+10x early product,Thousands of alert events per day and scheduled reports,"Add webhook endpoint, durable queue, PostgreSQL metadata, and daily workers.","Webhook ingestion, storage retention, and scheduled recomputation."
+100x commercial product,Millions of alert events per month across many strategies,"Add partitioned event tables, object storage, retries, monitoring, and cost-aware retention.","Event volume, market-data enrichment, retention policy, and support load."

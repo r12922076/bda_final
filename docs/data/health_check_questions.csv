@@ -1,0 +1,10 @@
+question_id,section,question,input_type,options,risk_category,weight
+Q001,persona,Which TradingView workflow best describes the user?,single_choice,alert-heavy|paid-script|pine-coder|no-code|creator,target_customer,0
+Q002,strategy,What trading style is being evaluated?,single_choice,Trend following|Breakout|Mean reversion|ETF rotation|Paid script due diligence|Not sure,template_matching,0
+Q003,data,Do you have TradingView alert logs?,checkbox,yes|no,live_alert_observability,12
+Q004,data,Do you have Strategy Tester results?,checkbox,yes|no,backtest_realism,10
+Q005,data,Are commission and slippage assumptions specified?,checkbox,yes|no,backtest_realism,8
+Q006,data,Do you know whether request.security or multi-timeframe logic is used?,checkbox,yes|no,repainting_lookahead,16
+Q007,data,Do you have forward-test records?,checkbox,yes|no,evidence_quality,14
+Q008,risk,Is there an explicit exit rule?,checkbox,yes|no,risk_rule_completeness,8
+Q009,risk,Is there a position sizing rule?,checkbox,yes|no,risk_rule_completeness,8

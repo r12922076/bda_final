@@ -1,0 +1,29 @@
+[
+  {
+    "strategy_id": "T001",
+    "symbol": "AAPL",
+    "signal": "BUY",
+    "price": 192.40,
+    "timestamp": "2026-06-19T09:30:00Z",
+    "timeframe": "1h",
+    "message": "BUY alert fired for AAPL"
+  },
+  {
+    "strategy_id": "T002",
+    "symbol": "BTCUSD",
+    "signal": "SELL",
+    "price": 66420.50,
+    "timestamp": "2026-06-19T11:00:00Z",
+    "timeframe": "15m",
+    "message": "Breakout failure alert fired for BTCUSD"
+  },
+  {
+    "strategy_id": "T006",
+    "symbol": "SPY",
+    "signal": "BUY",
+    "price": 531.12,
+    "timestamp": "2026-06-19T14:30:00Z",
+    "timeframe": "1d",
+    "message": "Paid-script due-diligence sample alert"
+  }
+]

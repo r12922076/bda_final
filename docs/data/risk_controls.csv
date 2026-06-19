@@ -1,0 +1,6 @@
+risk,control
+Platform dependency,Use user-authorized alert payloads and user-provided exports; avoid unauthorized scraping.
+Investment-advice boundary,Provide workflow diagnostics only; no personalized trade recommendations or execution.
+Privacy and data minimization,Do not collect broker passwords or trading API keys; retain only validation-relevant fields.
+Cold start,"Start with one-time health checks, then migrate users into monitoring as alert history accumulates."
+Competitive imitation,"Differentiate through audit trails, evidence-backed reports, and alert/outcome history."

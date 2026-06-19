@@ -1,0 +1,6 @@
+persona_id,name,description,main_pain,recommended_entry_product
+alert-heavy,Alert-heavy trader,Uses many TradingView alerts and wants outcome tracking,Missed or unclear alert outcomes,Forward-Test Monitor
+paid-script,Paid-indicator buyer,Buys or follows paid and invite-only indicators,Unclear credibility and repaint risk,Strategy Health Check
+pine-coder,Pine Script builder,Writes or modifies Pine Script indicators and strategies,Repainting lookahead and backtest realism,Pro Completion Plan
+no-code,No-code strategy seeker,Wants templates without writing full Pine Script,Missing strategy components and rule clarity,Pro Completion Plan
+creator,Indicator creator,Sells or shares indicators and wants evidence-backed trust,Needs public credibility without promising returns,Creator Trust Report

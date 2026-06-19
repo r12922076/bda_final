@@ -1,0 +1,6 @@
+layer,design,why
+Webhook ingestion,User-authorized HTTPS endpoint validates payloads and acknowledges quickly.,Avoids slow synchronous processing and reduces missing-event risk.
+Queue / stream buffer,Durable queue stores bursty alert events before analytics workers consume them.,Decouples ingestion from processing and supports retries.
+Idempotency,Payload hashes and event IDs prevent duplicate counting.,Preserves audit quality and report integrity.
+Storage,"Relational metadata, raw-payload object storage, and time-series outcome tables.","Separates users, strategies, raw logs, and analytics outputs."
+Scheduled jobs,Daily report recomputation and near-real-time alert monitoring.,Balances reliable reporting with timely dashboard updates.

@@ -1,0 +1,5 @@
+evidence_type,role,interpretation
+Official technical docs,"Validate that repainting, strategy testing, alerts, and webhooks are platform-level topics.",Strong technical motivation; not direct willingness-to-pay evidence.
+Public user discussions,"Show qualitative pain around repainting, webhook issues, and paid-script trust.",Useful but not representative; should be described conservatively.
+Competitor pricing,Show adjacent workflows are monetized.,Benchmarks a plausible price corridor; not a direct demand curve.
+Static prototype data,Demonstrates reproducible data product logic.,Course artifact; production system needs live authorized ingestion.

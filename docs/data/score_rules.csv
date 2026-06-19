@@ -1,0 +1,10 @@
+rule_id,category,condition,points,explanation
+S001,Live alert observability,alert_logs_present,12,Alert-event history is needed for forward-test attribution.
+S002,Live alert observability,webhook_payload_present,8,Webhook payload schema turns alerts into structured event data.
+S003,Backtest realism,strategy_tester_present,10,Strategy Tester output is needed for pre-live validation.
+S004,Backtest realism,commission_slippage_specified,8,Cost assumptions improve backtest/live comparability.
+S005,Repainting/lookahead risk,repainting_review_present,16,Multi-timeframe logic requires repaint and lookahead review.
+S006,Evidence quality,forward_records_present,14,Live or paper forward records improve evidence quality.
+S007,Evidence quality,version_history_present_for_creator,8,Creator-facing trust reports require versioned behavior.
+S008,Risk rule completeness,explicit_exit_rule_present,8,Missing exit logic weakens strategy completion quality.
+S009,Risk rule completeness,position_sizing_rule_present,8,Sizing logic is part of a serious validation workflow.

@@ -1,0 +1,7 @@
+section_id,title,description,paid_output
+R001,Executive summary,High-level diagnosis and score,Strategy Health Check
+R002,Health score breakdown,Category scores and gap reasons,Strategy Health Check
+R003,Forward-test monitor,Alert outcome attribution over selected horizon,Forward-Test Monitor
+R004,Recommended templates,Strategy-completion modules based on user profile,Pro Completion Plan
+R005,Evidence basis,Official docs public traces and competitor benchmarks,All plans
+R006,Risk and disclaimer,Non-advice boundary and data-governance notes,All plans
